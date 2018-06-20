@@ -40,9 +40,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAdminLogService.cs" />
+    <Compile Include="IAdminUserService.cs" />
     <Compile Include="ICityService.cs" />
     <Compile Include="IServiceSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PalmRent.DTO\PalmRent.DTO.csproj">
+      <Project>{20386acc-e83d-4d11-93db-6d44144af8dc}</Project>
+      <Name>PalmRent.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

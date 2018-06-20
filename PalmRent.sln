@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.FrontWeb", "PalmRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.IService", "PalmRent.IService\PalmRent.IService.csproj", "{00B48ABB-D40E-4E3C-8F1D-47CD5B264EF2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.DTO", "PalmRent.DTO\PalmRent.DTO.csproj", "{20386ACC-E83D-4D11-93DB-6D44144AF8DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.Common", "PalmRent.Common\PalmRent.Common.csproj", "{6FA38BE1-D789-4AA2-935A-9D88F17B66EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{00B48ABB-D40E-4E3C-8F1D-47CD5B264EF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00B48ABB-D40E-4E3C-8F1D-47CD5B264EF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00B48ABB-D40E-4E3C-8F1D-47CD5B264EF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20386ACC-E83D-4D11-93DB-6D44144AF8DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20386ACC-E83D-4D11-93DB-6D44144AF8DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20386ACC-E83D-4D11-93DB-6D44144AF8DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20386ACC-E83D-4D11-93DB-6D44144AF8DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA38BE1-D789-4AA2-935A-9D88F17B66EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA38BE1-D789-4AA2-935A-9D88F17B66EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA38BE1-D789-4AA2-935A-9D88F17B66EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA38BE1-D789-4AA2-935A-9D88F17B66EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

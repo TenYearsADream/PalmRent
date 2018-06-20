@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminLogService.cs" />
+    <Compile Include="AdminUserService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="CityService.cs" />
     <Compile Include="Class1.cs" />
@@ -90,6 +92,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PalmRent.Common\PalmRent.Common.csproj">
+      <Project>{6fa38be1-d789-4aa2-935a-9d88f17b66ef}</Project>
+      <Name>PalmRent.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalmRent.DTO\PalmRent.DTO.csproj">
+      <Project>{20386ACC-E83D-4D11-93DB-6D44144AF8DC}</Project>
+      <Name>PalmRent.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PalmRent.IService\PalmRent.IService.csproj">
       <Project>{00b48abb-d40e-4e3c-8f1d-47cd5b264ef2}</Project>
       <Name>PalmRent.IService</Name>
