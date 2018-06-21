@@ -52,9 +52,11 @@
   <ItemGroup>
     <Compile Include="AdminLogService.cs" />
     <Compile Include="AdminUserService.cs" />
+    <Compile Include="AttachmentService.cs" />
     <Compile Include="BaseService.cs" />
     <Compile Include="CityService.cs" />
     <Compile Include="Class1.cs" />
+    <Compile Include="CommunityService.cs" />
     <Compile Include="Entities\AdminLogEntity.cs" />
     <Compile Include="Entities\AdminUserEntity.cs" />
     <Compile Include="Entities\AttachmentEntity.cs" />
@@ -70,6 +72,8 @@
     <Compile Include="Entities\RoleEntity.cs" />
     <Compile Include="Entities\SettingEntity.cs" />
     <Compile Include="Entities\UserEntity.cs" />
+    <Compile Include="HouseAppointmentService.cs" />
+    <Compile Include="HouseService.cs" />
     <Compile Include="ModelConfig\AdminLogConfig.cs" />
     <Compile Include="ModelConfig\AdminUserConfig.cs" />
     <Compile Include="ModelConfig\AttachmentConfig.cs" />
