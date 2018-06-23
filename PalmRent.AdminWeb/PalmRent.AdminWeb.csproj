@@ -679,9 +679,6 @@
     <Content Include="lib\ueditor\1.4.3\lang\zh-cn\images\music.png" />
     <Content Include="lib\ueditor\1.4.3\lang\zh-cn\images\upload.png" />
     <Content Include="lib\ueditor\1.4.3\lang\zh-cn\zh-cn.js" />
-    <Content Include="lib\ueditor\1.4.3\net\Bin\Newtonsoft.Json.dll" />
-    <Content Include="lib\ueditor\1.4.3\net\Bin\Newtonsoft.Json.pdb" />
-    <Content Include="lib\ueditor\1.4.3\net\Bin\Newtonsoft.Json.xml" />
     <Content Include="lib\ueditor\1.4.3\net\net.sln" />
     <Content Include="lib\ueditor\1.4.3\php\action_crawler.php" />
     <Content Include="lib\ueditor\1.4.3\php\action_list.php" />
@@ -1364,6 +1361,7 @@
     <Compile Include="App_Start\PalmRentExceptionFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\PermissionController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1375,6 +1373,8 @@
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\NotSupportedHandler.cs" />
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\PathFormater.cs" />
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\UploadHandler.cs" />
+    <Compile Include="Models\PermissionAddNewModel.cs" />
+    <Compile Include="Models\PermissionEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1470,6 +1470,11 @@
     <Content Include="skin\yellow\Thumbs.db" />
     <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Views\Main\Login.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Permission\List.cshtml" />
+    <Content Include="Views\Permission\Add.cshtml" />
+    <Content Include="Views\Permission\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1483,9 +1488,16 @@
     <Folder Include="lib\Highcharts\4.1.7\exporting-server\java\highcharts-export\highcharts-export-convert\target\surefire\" />
     <Folder Include="lib\Highcharts\4.1.7\exporting-server\java\highcharts-export\highcharts-export-web\target\generated-sources\annotations\" />
     <Folder Include="lib\Highcharts\4.1.7\exporting-server\java\highcharts-export\highcharts-export-web\target\surefire\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\PalmRent.CommonMVC\PalmRent.CommonMVC.csproj">
+      <Project>{0ed11b80-7812-47dd-8367-e5229e3db902}</Project>
+      <Name>PalmRent.CommonMVC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalmRent.DTO\PalmRent.DTO.csproj">
+      <Project>{20386ACC-E83D-4D11-93DB-6D44144AF8DC}</Project>
+      <Name>PalmRent.DTO</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PalmRent.IService\PalmRent.IService.csproj">
       <Project>{00b48abb-d40e-4e3c-8f1d-47cd5b264ef2}</Project>
       <Name>PalmRent.IService</Name>

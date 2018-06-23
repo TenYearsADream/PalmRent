@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Autofac.Integration.Mvc;
+using PalmRent.CommonMVC;
 using PalmRent.FrontWeb.App_Start;
 using PalmRent.IService;
 using System;
@@ -18,6 +19,11 @@ namespace PalmRent.FrontWeb
         {
 
             log4net.Config.XmlConfigurator.Configure();
+            ModelBinders.Binders.Add(typeof(string), new TrimToDBCModelBinder());
+            ModelBinders.Binders.Add(typeof(int), new TrimToDBCModelBinder());
+            ModelBinders.Binders.Add(typeof(long), new TrimToDBCModelBinder());
+            ModelBinders.Binders.Add(typeof(double), new TrimToDBCModelBinder());
+
             GlobalFilters.Filters.Add(new PalmRentExceptionFilter());
 
             var builder = new ContainerBuilder();
@@ -40,6 +46,8 @@ namespace PalmRent.FrontWeb
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));//!!!
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            GlobalFilters.Filters.Add(new JsonNetActionFilter());
         }
     }
 }

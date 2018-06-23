@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using PalmRent.IService;
+using PalmRent.CommonMVC;
 
 namespace PalmRent.AdminWeb
 {
@@ -17,6 +18,11 @@ namespace PalmRent.AdminWeb
         protected void Application_Start()
         {
             log4net.Config.XmlConfigurator.Configure();
+            ModelBinders.Binders.Add(typeof(string), new TrimToDBCModelBinder());
+            ModelBinders.Binders.Add(typeof(int), new TrimToDBCModelBinder());
+            ModelBinders.Binders.Add(typeof(long), new TrimToDBCModelBinder());
+            ModelBinders.Binders.Add(typeof(double), new TrimToDBCModelBinder());
+
             GlobalFilters.Filters.Add(new PalmRentExceptionFilter());
 
             var builder = new ContainerBuilder();
@@ -39,6 +45,8 @@ namespace PalmRent.AdminWeb
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));//!!!
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            GlobalFilters.Filters.Add(new JsonNetActionFilter());
         }
     }
 }
