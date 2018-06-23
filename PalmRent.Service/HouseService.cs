@@ -3,6 +3,7 @@ using PalmRent.IService;
 using PalmRent.Service.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,65 +54,302 @@ namespace PalmRent.Service
                 return houseEntity.Id;
             }
         }
-
+        /// <summary>
+        /// 为一个房屋添加照片
+        /// </summary>
+        /// <param name="housePic"></param>
+        /// <returns></returns>
         public long AddNewHousePic(HousePicDTO housePic)
         {
-            throw new NotImplementedException();
+            HousePicEntity entity = new HousePicEntity();
+            entity.HouseId = housePic.HouseId;
+            entity.ThumbUrl = housePic.ThumbUrl;
+            entity.Url = housePic.Url;
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                ctx.HousePics.Add(entity);
+                ctx.SaveChanges();
+                return entity.Id;
+            }
         }
-
+        /// <summary>
+        /// 删除房屋照片
+        /// </summary>
+        /// <param name="housePicId"></param>
         public void DeleteHousePic(long housePicId)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                //复习EF状态转换
+                /*
+                HousePicEntity entity = new HousePicEntity();
+                entity.Id = housePicId;
+                ctx.Entry(entity).State = EntityState.Deleted;
+                ctx.SaveChanges();*/
+                var entity = ctx.HousePics
+                    .SingleOrDefault(p => p.IsDeleted == false && p.Id == housePicId);
+                if (entity != null)
+                {
+                    ctx.HousePics.Remove(entity);
+                    ctx.SaveChanges();
+                }
+            }
         }
 
+        private HouseDTO ToDTO(HouseEntity entity)
+        {
+            HouseDTO dto = new HouseDTO();
+            dto.Address = entity.Address;
+            dto.Area = entity.Area;
+            dto.AttachmentIds = entity.Attachments.Select(a => a.Id).ToArray();
+            dto.CheckInDateTime = entity.CheckInDateTime;
+            dto.CityId = entity.Community.Region.CityId;
+            dto.CityName = entity.Community.Region.City.Name;
+            dto.CommunityBuiltYear = entity.Community.BuiltYear;
+            dto.CommunityId = entity.CommunityId;
+            dto.CommunityLocation = entity.Community.Location;
+            dto.CommunityName = entity.Community.Name;
+            dto.CommunityTraffic = entity.Community.Traffic;
+            dto.CreateDateTime = entity.CreateDateTime;
+            dto.DecorateStatusId = entity.DecorateStatusId;
+            dto.DecorateStatusName = entity.DecorateStatus.Name;
+            dto.Description = entity.Description;
+            dto.Direction = entity.Direction;
+            var firstPic = entity.HousePics.FirstOrDefault();
+            if (firstPic != null)
+            {
+                dto.FirstThumbUrl = firstPic.ThumbUrl;
+            }
+            dto.FloorIndex = entity.FloorIndex;
+            dto.Id = entity.Id;
+            dto.LookableDateTime = entity.LookableDateTime;
+            dto.MonthRent = entity.MonthRent;
+            dto.OwnerName = entity.OwnerName;
+            dto.OwnerPhoneNum = entity.OwnerPhoneNum;
+            dto.RegionId = entity.Community.RegionId;
+            dto.RegionName = entity.Community.Region.Name;
+            dto.RoomTypeId = entity.RoomTypeId;
+            dto.RoomTypeName = entity.RoomType.Name;
+            dto.StatusId = entity.StatusId;
+            dto.StatusName = entity.Status.Name;
+            dto.TotalFloorCount = entity.TotalFloorCount;
+            dto.TypeId = entity.TypeId;
+            dto.TypeName = entity.Type.Name;
+            return dto;
+        }
+
+        /// <summary>
+        /// 获取所有房屋信息
+        /// </summary>
+        /// <returns></returns>
         public HouseDTO[] GetAll()
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseEntity> houseBS = new BaseService<HouseEntity>(ctx);
+                var houses = houseBS.GetAll()
+                    .Include(h => h.Attachments).Include(h => h.Community)
+                    .Include(nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region)
+                        + "." + nameof(RegionEntity.City))
+                    .Include(nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region))
+                    .Include(h => h.DecorateStatus)
+                    .Include(h => h.HousePics)
+                    .Include(h => h.RoomType)
+                    .Include(h => h.Status)
+                    .Include(h => h.Type);
+                return houses.ToList().Select(h => ToDTO(h)).ToArray();
+            }
         }
 
+        /// <summary>
+        /// 根据id获取房屋信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public HouseDTO GetById(long id)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseEntity> houseBS = new BaseService<HouseEntity>(ctx);
+                var house = houseBS.GetAll()
+                    .Include(h => h.Attachments).Include(h => h.Community)
+                    //Include("Community.Region.City");
+                    .Include(nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region)
+                        + "." + nameof(RegionEntity.City))
+                    .Include(nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region))
+                    .Include(h => h.DecorateStatus)
+                    .Include(h => h.HousePics)
+                    .Include(h => h.RoomType)
+                    .Include(h => h.Status)
+                    .Include(h => h.Type)
+                    .SingleOrDefault(h => h.Id == id);
+                //.Where(h => h.Id == id).SingleOrDefault();
+                if (house == null)
+                {
+                    return null;
+                }
+                return ToDTO(house);
+            }
         }
-
+        /// <summary>
+        /// 获取在一个城市下创建时间在指定时间范围内的房屋的数量
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>
+        /// <returns></returns>
         public long GetCount(long cityId, DateTime startDateTime, DateTime endDateTime)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseEntity> houseBS = new BaseService<HouseEntity>(ctx);
+                return houseBS.GetAll()
+                    .LongCount(h => h.Community.Region.CityId == cityId
+                    && h.CreateDateTime >= startDateTime && h.CreateDateTime <= endDateTime);
+            }
         }
-
+        /// <summary>
+        /// 分页获取一个城市下某一个类型的房屋信息列表
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <param name="typeId"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="currentIndex"></param>
+        /// <returns></returns>
         public HouseDTO[] GetPagedData(long cityId, long typeId, int pageSize, int currentIndex)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseEntity> houseBS = new BaseService<HouseEntity>(ctx);
+                var houses = houseBS.GetAll()
+                    .Include(h => h.Attachments).Include(h => h.Community)
+                    /*
+                    .Include(h => nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region)
+                        + "." + nameof(RegionEntity.City))
+                    .Include(h => nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region))*/
+                    //.Include("Community.Region.City")
+                    .Include(nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region)
+                        + "." + nameof(RegionEntity.City))
+                    .Include(nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region))
+                    .Include(h => h.DecorateStatus)
+                    .Include(h => h.HousePics)
+                    .Include(h => h.RoomType)
+                    .Include(h => h.Status)
+                    .Include(h => h.Type)
+                    //注意Where的位置，要放到Skip之前
+                    .Where(h => h.Community.Region.CityId == cityId && h.TypeId == typeId)
+                    .OrderByDescending(h => h.CreateDateTime)
+                    .Skip(currentIndex).Take(pageSize);
+                //.Where(h => h.Community.Region.CityId == cityId && h.TypeId == typeId);
+                return houses.ToList().Select(h => ToDTO(h)).ToArray();
+            }
         }
-
+        /// <summary>
+        /// 获取一个房屋的所有照片
+        /// </summary>
+        /// <param name="houseId"></param>
+        /// <returns></returns>
         public HousePicDTO[] GetPics(long houseId)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                /*
+                BaseService<HousePicEntity> bs = new BaseService<HousePicEntity>(ctx);
+                return bs.GetAll().AsNoTracking().Where(p => p.HouseId == houseId)
+                    .Select(p => new HousePicDTO
+                    {
+                        CreateDateTime = p.CreateDateTime,
+                        HouseId = p.HouseId,
+                        Id = p.Id,
+                        ThumbUrl = p.ThumbUrl,
+                        Url = p.Url
+                    })
+                    .ToArray();*/
+                BaseService<HouseEntity> bs = new BaseService<HouseEntity>(ctx);
+                return bs.GetById(houseId).HousePics.Select(p => new HousePicDTO
+                {
+                    CreateDateTime = p.CreateDateTime,
+                    HouseId = p.HouseId,
+                    Id = p.Id,
+                    ThumbUrl = p.ThumbUrl,
+                    Url = p.Url
+                }).ToArray();
+            }
         }
 
         public int GetTodayNewHouseCount(long cityId)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// 获取一个城市下,某一个类型的房屋的数量
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <param name="typeId"></param>
+        /// <returns></returns>
         public long GetTotalCount(long cityId, long typeId)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseEntity> bs = new BaseService<HouseEntity>(ctx);
+                return bs.GetAll()
+                    .LongCount(h => h.Community.Region.CityId == cityId && h.TypeId == typeId);
+            }
         }
-
+        /// <summary>
+        /// 软删除一个房屋
+        /// </summary>
+        /// <param name="id"></param>
         public void MarkDeleted(long id)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseEntity> bs = new BaseService<HouseEntity>(ctx);
+                bs.MarkDeleted(id);
+            }
         }
 
         public HouseSearchResult Search(HouseSearchOptions options)
         {
             throw new NotImplementedException();
         }
-
+        /// <summary>
+        /// 更新一个房屋
+        /// </summary>
+        /// <param name="house"></param>
         public void Update(HouseDTO house)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseEntity> bs = new BaseService<HouseEntity>(ctx);
+                HouseEntity entity = bs.GetById(house.Id);
+                entity.Address = house.Address;
+                entity.Area = house.Area;
+                //2,3,4
+                entity.Attachments.Clear();//先删再加
+                var atts = ctx.Attachments.Where(a => a.IsDeleted == false &&
+                    house.AttachmentIds.Contains(a.Id));
+                foreach (AttachmentEntity att in atts)
+                {
+                    entity.Attachments.Add(att);
+                }
+                //3,4,5
+                entity.CheckInDateTime = house.CheckInDateTime;
+                entity.CommunityId = house.CommunityId;
+                entity.DecorateStatusId = house.DecorateStatusId;
+                entity.Description = house.Description;
+                entity.Direction = house.Direction;
+                entity.FloorIndex = house.FloorIndex;
+                entity.LookableDateTime = house.LookableDateTime;
+                entity.MonthRent = house.MonthRent;
+                entity.OwnerName = house.OwnerName;
+                entity.OwnerPhoneNum = house.OwnerPhoneNum;
+                entity.RoomTypeId = house.RoomTypeId;
+                entity.StatusId = house.StatusId;
+                entity.TotalFloorCount = house.TotalFloorCount;
+                entity.TypeId = house.TypeId;
+                ctx.SaveChanges();
+            }
         }
     }
 }

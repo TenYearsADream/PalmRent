@@ -47,7 +47,12 @@
     <Compile Include="ICommunityService.cs" />
     <Compile Include="IHouseAppointmentService.cs" />
     <Compile Include="IHouseService.cs" />
+    <Compile Include="IIdNameService.cs" />
+    <Compile Include="IPermissionService.cs" />
+    <Compile Include="IRoleService.cs" />
     <Compile Include="IServiceSupport.cs" />
+    <Compile Include="ISettingService.cs" />
+    <Compile Include="IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
