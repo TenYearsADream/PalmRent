@@ -50,6 +50,9 @@
     <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="CaptchaGen, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CaptchaGen.1.0.0\lib\net40\CaptchaGen.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -1362,6 +1365,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1373,8 +1377,12 @@
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\NotSupportedHandler.cs" />
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\PathFormater.cs" />
     <Compile Include="lib\ueditor\1.4.3\net\App_Code\UploadHandler.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PermissionAddNewModel.cs" />
     <Compile Include="Models\PermissionEditModel.cs" />
+    <Compile Include="Models\RoleAddModel.cs" />
+    <Compile Include="Models\RoleEditGetModel.cs" />
+    <Compile Include="Models\RoleEditModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1475,6 +1483,9 @@
     <Content Include="Views\Permission\List.cshtml" />
     <Content Include="Views\Permission\Add.cshtml" />
     <Content Include="Views\Permission\Edit.cshtml" />
+    <Content Include="Views\Role\List.cshtml" />
+    <Content Include="Views\Role\Add.cshtml" />
+    <Content Include="Views\Role\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1493,6 +1504,10 @@
     <ProjectReference Include="..\PalmRent.CommonMVC\PalmRent.CommonMVC.csproj">
       <Project>{0ed11b80-7812-47dd-8367-e5229e3db902}</Project>
       <Name>PalmRent.CommonMVC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PalmRent.Common\PalmRent.Common.csproj">
+      <Project>{6fa38be1-d789-4aa2-935a-9d88f17b66ef}</Project>
+      <Name>PalmRent.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\PalmRent.DTO\PalmRent.DTO.csproj">
       <Project>{20386ACC-E83D-4D11-93DB-6D44144AF8DC}</Project>

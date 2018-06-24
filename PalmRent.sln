@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.Common", "PalmRent
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.CommonMVC", "PalmRent.CommonMVC\PalmRent.CommonMVC.csproj", "{0ED11B80-7812-47DD-8367-E5229E3DB902}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.UnitTest", "PalmRent.UnitTest\PalmRent.UnitTest.csproj", "{15E680FA-1CD1-40AF-831A-DC17020C5201}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{0ED11B80-7812-47DD-8367-E5229E3DB902}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0ED11B80-7812-47DD-8367-E5229E3DB902}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0ED11B80-7812-47DD-8367-E5229E3DB902}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15E680FA-1CD1-40AF-831A-DC17020C5201}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E680FA-1CD1-40AF-831A-DC17020C5201}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E680FA-1CD1-40AF-831A-DC17020C5201}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15E680FA-1CD1-40AF-831A-DC17020C5201}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
