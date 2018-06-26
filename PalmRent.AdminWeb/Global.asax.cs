@@ -23,7 +23,7 @@ namespace PalmRent.AdminWeb
             ModelBinders.Binders.Add(typeof(long), new TrimToDBCModelBinder());
             ModelBinders.Binders.Add(typeof(double), new TrimToDBCModelBinder());
 
-            GlobalFilters.Filters.Add(new PalmRentExceptionFilter());
+            
 
             var builder = new ContainerBuilder();
             builder.RegisterControllers(typeof(MvcApplication).Assembly)
@@ -45,8 +45,12 @@ namespace PalmRent.AdminWeb
             DependencyResolver.SetResolver(new AutofacDependencyResolver(container));//!!!
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
+            /*
+            GlobalFilters.Filters.Add(new PalmRentExceptionFilter());
             GlobalFilters.Filters.Add(new JsonNetActionFilter());
+            GlobalFilters.Filters.Add(new PalmRentAuthorizeFilter());
+            */
+            FilterConfig.RegisterFilters(GlobalFilters.Filters);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using PalmRent.AdminWeb.Models;
+﻿using PalmRent.AdminWeb.App_Start;
+using PalmRent.AdminWeb.Models;
 using PalmRent.CommonMVC;
 using PalmRent.IService;
 using System;
@@ -16,7 +17,9 @@ namespace PalmRent.AdminWeb.Controllers
         public IRoleService roleService { get; set; }
         //访问List这个Action的时候当前用户必须具有"Admin.List"/"Admin.Add"
         //这两个权限
-        
+
+        [CheckPermission("Admin.List")]
+        [CheckPermission("Admin.Add")]
         public ActionResult List()
         {
             //AOP。AuthorizeFilter/ActionFilter/ResultFilter/ExceptionFilter
