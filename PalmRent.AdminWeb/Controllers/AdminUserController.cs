@@ -19,7 +19,6 @@ namespace PalmRent.AdminWeb.Controllers
         //这两个权限
 
         [CheckPermission("Admin.List")]
-        [CheckPermission("Admin.Add")]
         public ActionResult List()
         {
             //AOP。AuthorizeFilter/ActionFilter/ResultFilter/ExceptionFilter
@@ -28,14 +27,14 @@ namespace PalmRent.AdminWeb.Controllers
             return View(users);
         }
 
-        
+        [CheckPermission("Admin.Delete")]
         public ActionResult Delete(long id)
         {
             userService.MarkDeleted(id);
             return Json(new AjaxResult { Status = "ok" });
         }
 
-        
+        [CheckPermission("Admin.Delete")]
         public ActionResult BatchDelete(long[] selectedIds)
         {
             foreach (long id in selectedIds)
@@ -47,6 +46,7 @@ namespace PalmRent.AdminWeb.Controllers
 
         
         [HttpGet]
+        [CheckPermission("Admin.Add")]
         public ActionResult Add()
         {
             var cities = cityService.GetAll().ToList();
@@ -66,7 +66,7 @@ namespace PalmRent.AdminWeb.Controllers
         /// <param name="phoneNum"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-       
+        [CheckPermission("Admin.CheckPhoneNum")]
         public ActionResult CheckPhoneNum(string phoneNum, long? userId)
         {
             var user = userService.GetByPhoneNum(phoneNum);
@@ -85,6 +85,7 @@ namespace PalmRent.AdminWeb.Controllers
 
        
         [HttpPost]
+        [CheckPermission("Admin.Add")]
         public ActionResult Add(AdminUserAddModel model)
         {
             if (!ModelState.IsValid)
@@ -115,6 +116,7 @@ namespace PalmRent.AdminWeb.Controllers
 
         
         [HttpGet]
+        [CheckPermission("Admin.Edit")]
         public ActionResult Edit(long id)
         {
             var adminUser = userService.GetById(id);
@@ -141,6 +143,7 @@ namespace PalmRent.AdminWeb.Controllers
 
         
         [HttpPost]
+        [CheckPermission("Admin.Edit")]
         public ActionResult Edit(AdminUserEditModel model)
         {
             //修改了UpdateAdminUser方法的实现：当然password为空，不更新Password

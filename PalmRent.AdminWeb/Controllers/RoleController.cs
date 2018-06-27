@@ -1,4 +1,5 @@
-﻿using PalmRent.AdminWeb.Models;
+﻿using PalmRent.AdminWeb.App_Start;
+using PalmRent.AdminWeb.Models;
 using PalmRent.CommonMVC;
 using PalmRent.IService;
 using System;
@@ -18,19 +19,20 @@ namespace PalmRent.AdminWeb.Controllers
         {
             return View();
         }
-
+        [CheckPermission("Role.List")]
         public ActionResult List()
         {
             var roles = roleService.GetAll();
             return View(roles);
         }
-
+        [CheckPermission("Role.Add")]
         [HttpGet]
         public ActionResult Add()
         {
             var perms = permService.GetAll();//所有可用的权限项
             return View(perms);
         }
+        [CheckPermission("Role.Add")]
         [HttpPost]
         public ActionResult Add(RoleAddModel model)
         {
@@ -51,7 +53,7 @@ namespace PalmRent.AdminWeb.Controllers
             }
             return Json(new AjaxResult { Status = "ok" });
         }
-
+        [CheckPermission("Role.Edit")]
         [HttpGet]
         public ActionResult Edit(long id)
         {
@@ -68,7 +70,7 @@ namespace PalmRent.AdminWeb.Controllers
 
             return View(model);
         }
-
+        [CheckPermission("Role.Edit")]
         [HttpPost]
         public ActionResult Edit(RoleEditModel model)
         {
@@ -76,7 +78,7 @@ namespace PalmRent.AdminWeb.Controllers
             permService.UpdatePermIds(model.Id, model.PermissionIds);
             return Json(new AjaxResult { Status = "ok" });
         }
-
+        [CheckPermission("Role.Delete")]
         public ActionResult BatchDelete(long[] selectdIds)
         {
             foreach (long id in selectdIds)
@@ -85,7 +87,7 @@ namespace PalmRent.AdminWeb.Controllers
             }
             return Json(new AjaxResult { Status = "ok" });
         }
-
+        [CheckPermission("Role.Delete")]
         public ActionResult Delete(long id)
         {
             roleService.MarkDeleted(id);
