@@ -1,2 +1,2 @@
 # PalmRent
-GitHub上传练习
+掌上租房屋租赁系统
