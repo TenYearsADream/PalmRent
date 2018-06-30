@@ -16,10 +16,24 @@ namespace PalmRent.AdminWeb.Controllers
     {
         public IAdminUserService userService { get; set; }
         // GET: Main
-        
 
-        
-         [HttpGet]
+        public ActionResult Index()
+        {
+            long? userId = AdminHelper.GetUserId(HttpContext);
+            if (userId == null)
+            {
+                return Redirect("~/Main/Login");
+            }
+            var user = userService.GetById((long)userId);
+            return View(user);
+        }
+        public ActionResult Logout()
+        {
+            Session.Abandon();//销毁Session
+            return Redirect("~/Main/Login");
+        }
+
+        [HttpGet]
         public ActionResult Login()
         {
             return View();
