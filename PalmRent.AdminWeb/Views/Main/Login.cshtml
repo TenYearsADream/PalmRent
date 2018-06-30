@@ -60,8 +60,8 @@
                     url: "/Main/Login", dataType: "json", type: "post", data: formData,
                     success: function (res) {
                         if (res.status == "ok") {
-                            alert("登录成功");
-                            //location.href = "/Main/Index";
+                            //alert("登录成功");
+                            location.href = "/Main/Index";
                         }
                         else {
                             alert("错误：" + res.errorMsg);

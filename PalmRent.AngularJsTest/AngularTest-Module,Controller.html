@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>angularJs模块,控制器</title>
+    <script src="Scripts/angular.min.js"></script>
+</head>
+<body>
+    <!--ng-app:模块 ng-controller:控制器-->
+    <div ng-app="hd" ng-controller="ctrl">
+        <!--视图-->
+        <h2 ng-bind="name"></h2>
+        <input type="text" ng-model="name"/>
+        {{name}}
+    </div>
+    <script>
+        var m = angular.module("hd", []);
+        //双向数据绑定
+        m.controller('ctrl', ['$scope', function ($scope) {
+            //viewModel
+            $scope.name = '维拉蒂';
+        }]);
+    </script>
+</body>
+</html>

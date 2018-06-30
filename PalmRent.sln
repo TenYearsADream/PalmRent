@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.CommonMVC", "PalmR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.UnitTest", "PalmRent.UnitTest\PalmRent.UnitTest.csproj", "{15E680FA-1CD1-40AF-831A-DC17020C5201}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.AngularJsTest", "PalmRent.AngularJsTest\PalmRent.AngularJsTest.csproj", "{DE30E6BF-7A03-4756-B558-61A6D7873C8B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{15E680FA-1CD1-40AF-831A-DC17020C5201}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15E680FA-1CD1-40AF-831A-DC17020C5201}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15E680FA-1CD1-40AF-831A-DC17020C5201}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE30E6BF-7A03-4756-B558-61A6D7873C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE30E6BF-7A03-4756-B558-61A6D7873C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE30E6BF-7A03-4756-B558-61A6D7873C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE30E6BF-7A03-4756-B558-61A6D7873C8B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
