@@ -246,5 +246,33 @@ namespace PalmRent.AdminWeb.Controllers
                 Status = "ok"
             });
         }
+
+        public ActionResult PicList(long id)
+        {
+            var pics = houseService.GetPics(id);
+            return View(pics);
+        }
+
+        public ActionResult DeletePics(long[] selectedIds)
+        {
+            foreach (var picId in selectedIds)
+            {
+                houseService.DeleteHousePic(picId);
+            }
+
+            //CreateStaticPage(houseId);//上传了新图片或者删除图片都要重新生成html页面
+            //不建议删除图片
+            return Json(new AjaxResult { Status = "ok" });
+        }
+
+        public ActionResult RebuildAllStaticPage()
+        {
+            var houses = houseService.GetAll();
+            foreach (var house in houses)
+            {
+                CreateStaticPage(house.Id);
+            }
+            return Json(new AjaxResult { Status = "ok" });
+        }
     }
 }
