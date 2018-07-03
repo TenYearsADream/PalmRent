@@ -13,8 +13,8 @@ namespace PalmRent.FrontWeb.Controllers
         // GET: Main
         public ActionResult Index()
         {
-            CityService.AddNew("哈尔滨");
-            return Content("ok");
+
+            return View();
         }
     }
 }

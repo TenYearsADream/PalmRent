@@ -66,7 +66,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AngualrJs--单选框控制.html" />
     <Content Include="AngularJs--ng-model.html" />
+    <Content Include="AngularJs--ng-value.html" />
+    <Content Include="AngularJs--操作CheckBox复选框.html" />
     <Content Include="Handler1.ashx" />
     <None Include="packages.config" />
     <Content Include="AngularJs--ng-bind,ng-cloak.html" />
