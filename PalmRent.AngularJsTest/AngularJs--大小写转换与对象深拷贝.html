@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/angular.min.js"></script>
+</head>
+<body>
+    <div ng-app="hd" ng-controller="ctrl">
+
+    </div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl', ['$scope', function ($scope) {
+            //        console.log(angular.version);
+            //        console.log(angular.uppercase('houdunWANG'));
+            var obj = { name: '后盾人' };
+            var obj2 = {};
+            angular.copy(obj, obj2);
+            obj2.name = '后盾网';
+            console.log(obj);
+        }]);
+    </script>
+
+</body>
+</html>

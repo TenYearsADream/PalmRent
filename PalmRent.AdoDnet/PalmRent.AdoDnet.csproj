@@ -75,7 +75,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="sa账号启用.txt" />
     <Content Include="Web.config" />
+    <Content Include="数据类型.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

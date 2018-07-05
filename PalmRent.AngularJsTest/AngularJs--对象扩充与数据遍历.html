@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/angular.min.js"></script>
+</head>
+<body>
+    <div ng-app="hd" ng-controller="ctrl">
+        {{data}}
+    </div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl', ['$scope', function ($scope) {
+            //var obj = {'name': '后盾网'};
+            //angular.extend(obj, {url: 'houduwnang.com', 'web': '后盾人'});
+            //console.log(obj);
+            //        $scope.data = [{name: '后盾网', url: 'houdunwang.com'}, {name: '后盾人', url: 'houdunren.com'}];
+            //        //each   for
+            //        angular.forEach($scope.data, function (v, k) {
+            ////            v.url = 'www.'+v.url;
+            //            console.log(k);
+            //        });
+
+            data = { name: '后盾网', url: 'houdunwang.com' };
+            //each   for
+            angular.forEach(data, function (v, k) {
+                //            v.url = 'www.'+v.url;
+                console.log(v);
+            });
+        }]);
+    </script>
+
+</body>
+</html>

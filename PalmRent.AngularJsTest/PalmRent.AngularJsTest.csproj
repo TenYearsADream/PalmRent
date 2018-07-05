@@ -48,6 +48,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -69,11 +72,24 @@
     <Content Include="AngualrJs--单选框控制.html" />
     <Content Include="AngularJs--ng-model.html" />
     <Content Include="AngularJs--ng-value.html" />
+    <Content Include="AngularJs--select列表.html" />
+    <Content Include="AngularJs--大小写转换与对象深拷贝.html" />
+    <Content Include="AngularJs--对象扩充与数据遍历.html" />
     <Content Include="AngularJs--操作CheckBox复选框.html" />
     <Content Include="Handler1.ashx" />
+    <Content Include="Handler2.ashx" />
     <None Include="packages.config" />
     <Content Include="AngularJs--ng-bind,ng-cloak.html" />
     <Content Include="AngularJsTest-%24scope.html" />
+    <Content Include="json数据转换与本地存储及%24scope数据序列化提交到后台\Json字符串转换为Json对象.html" />
+    <Content Include="json数据转换与本地存储及%24scope数据序列化提交到后台\Json字符串转换为Json对象2.html" />
+    <Content Include="json数据转换与本地存储及%24scope数据序列化提交到后台\toJson--Json对象转换为Json字符串.html" />
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="json数据转换与本地存储及%24scope数据序列化提交到后台\表单提交.html" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\version.json" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
@@ -88,6 +104,8 @@
     <Content Include="Scripts\angular-cookies.min.js.map" />
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -867,6 +885,9 @@
   <ItemGroup>
     <Compile Include="Handler1.ashx.cs">
       <DependentUpon>Handler1.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="Handler2.ashx.cs">
+      <DependentUpon>Handler2.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
