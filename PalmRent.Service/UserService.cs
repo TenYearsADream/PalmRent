@@ -95,17 +95,44 @@ namespace PalmRent.Service
 
         public void IncrLoginError(long id)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                //检查手机号不能重复
+                BaseService<UserEntity> bs = new BaseService<UserEntity>(ctx);
+                var user = bs.GetById(id);
+                if (user == null)
+                {
+                    throw new ArgumentException("用户不存在 " + id);
+                }
+                user.LoginErrorTimes++;
+                user.LastLoginErrorDateTime = DateTime.Now;
+                ctx.SaveChanges();
+            }
         }
 
         public bool IsLocked(long id)
         {
-            throw new NotImplementedException();
+            var user = GetById(id);
+            //错误登录次数>=5，最后一次登录错误时间在30分钟之内
+            return (user.LoginErrorTimes >= 5
+                && user.LastLoginErrorDateTime > DateTime.Now.AddMinutes(-30));
         }
 
         public void ResetLoginError(long id)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                //检查手机号不能重复
+                BaseService<UserEntity> bs = new BaseService<UserEntity>(ctx);
+                var user = bs.GetById(id);
+                if (user == null)
+                {
+                    throw new ArgumentException("用户不存在 " + id);
+                }
+                user.LoginErrorTimes = 0;
+                user.LastLoginErrorDateTime = null;
+                ctx.SaveChanges();
+            }
         }
 
         public void SetUserCityId(long userId, long cityId)
