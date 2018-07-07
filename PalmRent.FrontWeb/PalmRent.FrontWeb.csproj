@@ -198,6 +198,7 @@
     <Compile Include="App_Start\PalmRentExceptionFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\MainController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -221,6 +222,10 @@
     <Content Include="Views\Main\Index.cshtml" />
     <Content Include="Views\Main\Register.cshtml" />
     <Content Include="Views\Main\Login.cshtml" />
+    <Content Include="Views\User\ForgotPassword.cshtml" />
+    <Content Include="Views\User\ForgotPassword2.cshtml" />
+    <Content Include="Views\User\ForgotPassword3.cshtml" />
+    <Content Include="Views\User\ForgotPassword4.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
