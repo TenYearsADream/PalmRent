@@ -3,6 +3,7 @@ using PalmRent.Common;
 using PalmRent.CommonMVC;
 using PalmRent.FrontWeb.Models;
 using PalmRent.IService;
+using PalmRent.Service;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,11 +17,18 @@ namespace PalmRent.FrontWeb.Controllers
     {
         public ICityService CityService { get; set; }
         public IUserService userService { get; set; }
+
+        public ISettingService settingService { get; set; } 
         // GET: Main
         public ActionResult Index()
         {
 
-            return View();
+            long cityId = FrontUtils.GetCityId(HttpContext);
+            //当前城市的名字
+            string cityName = CityService.GetById(cityId).Name;
+            ViewBag.cityName = cityName;
+            var cities = CityService.GetAll();
+            return View(cities);
         }
 
         [HttpGet]
@@ -180,6 +188,25 @@ namespace PalmRent.FrontWeb.Controllers
                 return Json(new AjaxResult { Status = "error", ErrorMsg = "此手机号已经被注册" });
             }
             userService.AddNew(model.PhoneNum, model.Password);
+            return Json(new AjaxResult { Status = "ok" });
+        }
+
+        /// <summary>
+        /// 切换当前用户的城市Id
+        /// </summary>
+        /// <param name="cityId"></param>
+        /// <returns></returns>
+        public ActionResult SwitchCityId(long cityId)
+        {
+            long? userId = FrontUtils.GetUserId(HttpContext);
+            if (userId == null)//无人登录
+            {
+                Session["CityId"] = cityId;
+            }
+            else
+            {
+                userService.SetUserCityId((long)userId, cityId);
+            }
             return Json(new AjaxResult { Status = "ok" });
         }
 
