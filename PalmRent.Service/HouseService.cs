@@ -311,7 +311,90 @@ namespace PalmRent.Service
 
         public HouseSearchResult Search(HouseSearchOptions options)
         {
-            throw new NotImplementedException();
+            /*
+            using (ZSZDbContext ctx = new ZSZDbContext())
+            {
+                BaseService<HouseEntity> bs = new BaseService<HouseEntity>(ctx);
+                var items = bs.GetAll().Where(h => h.Address.Contains("楼"));
+                long c = items.LongCount();
+                items.Take(10).ToList();
+            }*/
+
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseEntity> bs = new BaseService<HouseEntity>(ctx);
+                var items = bs.GetAll().Where(h => h.Community.Region.CityId == options.CityId
+                            && h.TypeId == options.TypeId);
+                if (options.RegionId != null)
+                {
+                    items = items.Where(t => t.Community.RegionId == options.RegionId);
+                }
+                if (options.StartMonthRent != null)
+                {
+                    items = items.Where(t => t.MonthRent >= options.StartMonthRent);
+                }
+                if (options.EndMonthRent != null)
+                {
+                    items = items.Where(t => t.MonthRent <= options.EndMonthRent);
+                }
+                if (options.EndMonthRent != null)
+                {
+                    items = items.Where(t => t.MonthRent <= options.EndMonthRent);
+                }
+                if (!string.IsNullOrEmpty(options.Keywords))
+                {
+                    items = items.Where(t => t.Address.Contains(options.Keywords)
+                            || t.Description.Contains(options.Keywords)
+                            || t.Community.Name.Contains(options.Keywords)
+                            || t.Community.Location.Contains(options.Keywords)
+                            || t.Community.Traffic.Contains(options.Keywords));
+                }
+                long totalCount = items.LongCount();//总搜索结果条数
+
+                items = items.Include(h => h.Attachments).Include(h => h.Community)
+                    .Include(nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region)
+                        + "." + nameof(RegionEntity.City))
+                    .Include(nameof(HouseEntity.Community) + "." + nameof(CommunityEntity.Region))
+                    .Include(h => h.DecorateStatus)
+                    .Include(h => h.HousePics)
+                    .Include(h => h.RoomType)
+                    .Include(h => h.Status)
+                    .Include(h => h.Type).Include(h => h.Attachments);
+
+                switch (options.OrderByType)
+                {
+                    case HouseSearchOrderByType.AreaAsc:
+                        items = items.OrderBy(t => t.Area);
+                        break;
+                    case HouseSearchOrderByType.AreaDesc:
+                        items = items.OrderByDescending(t => t.Area);
+                        break;
+                    case HouseSearchOrderByType.CreateDateDesc:
+                        items = items.OrderByDescending(t => t.CreateDateTime);
+                        break;
+                    case HouseSearchOrderByType.MonthRentAsc:
+                        items = items.OrderBy(t => t.MonthRent);
+                        break;
+                    case HouseSearchOrderByType.MonthRentDesc:
+                        items = items.OrderByDescending(t => t.MonthRent);
+                        break;
+                }
+                //一定不要items.Where
+                //而要items=items.Where();
+                //OrderBy要在Skip和Take之前
+                //给用户看的页码从1开始，程序中是从0开始
+                items = items.Skip((options.CurrentIndex - 1) * options.PageSize)
+                    .Take(options.PageSize);
+                HouseSearchResult searchResult = new HouseSearchResult();
+                searchResult.totalCount = totalCount;
+                List<HouseDTO> houses = new List<HouseDTO>();
+                foreach (var item in items)
+                {
+                    houses.Add(ToDTO(item));
+                }
+                searchResult.result = houses.ToArray();
+                return searchResult;
+            }
         }
         /// <summary>
         /// 更新一个房屋

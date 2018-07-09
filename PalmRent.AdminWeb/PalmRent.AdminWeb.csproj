@@ -1362,6 +1362,12 @@
     <Content Include="skin\yellow\acrossTab.png" />
     <Content Include="skin\yellow\icon_arrow.png" />
     <Content Include="skin\yellow\skin.css" />
+    <Content Include="upload\2018\07\01\1CAA0BED48121681AC766F547ACEF48C.jpg" />
+    <Content Include="upload\2018\07\01\1CAA0BED48121681AC766F547ACEF48C_thumb.jpg" />
+    <Content Include="upload\2018\07\01\C60DFF177F7477BAB52A9FD3C6055B9D.jpg" />
+    <Content Include="upload\2018\07\01\C60DFF177F7477BAB52A9FD3C6055B9D_thumb.jpg" />
+    <Content Include="upload\2018\07\01\DC75E4A3B128F6D5B0A6FA35352F3CD2.jpg" />
+    <Content Include="upload\2018\07\01\DC75E4A3B128F6D5B0A6FA35352F3CD2_thumb.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
