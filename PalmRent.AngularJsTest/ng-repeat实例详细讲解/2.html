@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="../Scripts/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="ctrl">
+        <ul>
+            <!--如果数据有重复会报错,用$index建立唯一索引-->
+            <li ng-repeat="v in data track by $index">
+                {{v}}
+            </li>
+        </ul>
+    </div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl', ['$scope', function ($scope) {
+            $scope.data = ['后盾人', '后盾云', 'hdphp', 'hdphp'];
+        }]);
+    </script>
+
+</body>
+</html>

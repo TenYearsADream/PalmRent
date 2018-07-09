@@ -88,6 +88,11 @@
     <Content Include="json数据转换与本地存储及%24scope数据序列化提交到后台\表单提交.html" />
     <Content Include="ng-if、ng-show、ng-disabled、ng-init.html" />
     <Content Include="ng-init与ng-trim及表单中表单value与%24scope数据提交差异.html" />
+    <Content Include="ng-repeat实例详细讲解\1.html" />
+    <Content Include="ng-repeat实例详细讲解\2.html" />
+    <Content Include="ng-selected、ng-disabled、ng-readonly\1.html" />
+    <Content Include="ng-selected、ng-disabled、ng-readonly\2.html" />
+    <Content Include="ng-selected、ng-disabled、ng-readonly\3.html" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
