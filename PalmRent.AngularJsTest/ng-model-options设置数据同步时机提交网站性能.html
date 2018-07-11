@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/angular.min.js"></script>
+</head>
+<body>
+    <div ng-app="hd" ng-controller="ctrl">
+        <!--updateOn:双向数据绑定更新的时机:blur(失去焦点):-->
+        <!--debounce:如果不失去焦点的时候: 2000(2秒后更新)-->
+        <input type="text" ng-model="title" ng-model-options="{updateOn:'default blur',debounce:{default:2000,blur:0}}">
+        {{title}}
+    </div>
+    <script>
+        var m = angular.module('hd', []);
+        m.controller('ctrl', ['$scope', function ($scope) {
+        }]);
+    </script>
+
+</body>
+</html>

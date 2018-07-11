@@ -78,6 +78,13 @@
     <Content Include="AngularJs--操作CheckBox复选框.html" />
     <Content Include="Handler1.ashx" />
     <Content Include="Handler2.ashx" />
+    <Content Include="ng-model-options设置数据同步时机提交网站性能.html" />
+    <Content Include="事件处理指令讲解.html" />
+    <Content Include="使用ng-style动态改变样式.html" />
+    <Content Include="简单实现表单的全选与反选.html" />
+    <Content Include="通过ng-class动态改变样式类实例操作\1.html" />
+    <Content Include="通过ng-class动态改变样式类实例操作\2.html" />
+    <Content Include="通过ng-class动态改变样式类实例操作\3.html" />
     <None Include="packages.config" />
     <Content Include="AngularJs--ng-bind,ng-cloak.html" />
     <Content Include="AngularJsTest-%24scope.html" />
