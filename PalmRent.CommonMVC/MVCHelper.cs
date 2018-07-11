@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -47,6 +48,41 @@ namespace PalmRent.CommonMVC
                 view.Render(ctx, sw);
                 return sw.ToString();
             }
+        }
+
+        public static string ToQueryString(System.Collections.Specialized.NameValueCollection nvc)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var key in nvc.AllKeys)
+            {
+                string value = nvc[key];
+                //EscapeDataString就是对特殊字符进行uri编码
+                sb.Append(key).Append("=")
+                    .Append(Uri.EscapeDataString(value)).Append("&");
+            }
+            return sb.ToString().Trim('&');//去掉最后一个多余的&
+        }
+
+        public static string RemoveQueryString(NameValueCollection nvc, string name)
+        {
+            NameValueCollection newNVC = new NameValueCollection(nvc);
+            newNVC.Remove(name);
+            return ToQueryString(newNVC);
+        }
+
+        public static string UpdateQueryString(NameValueCollection nvc,
+            string name, string value)
+        {
+            NameValueCollection newNVC = new NameValueCollection(nvc);
+            if (newNVC.AllKeys.Contains(name))
+            {
+                newNVC[name] = value;
+            }
+            else
+            {
+                newNVC.Add(name, value);
+            }
+            return ToQueryString(newNVC);
         }
     }
 }
