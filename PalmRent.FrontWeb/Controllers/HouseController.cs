@@ -1,4 +1,5 @@
-﻿using PalmRent.DTO;
+﻿using PalmRent.CommonMVC;
+using PalmRent.DTO;
 using PalmRent.FrontWeb.Models;
 using PalmRent.IService;
 using System;
@@ -69,6 +70,56 @@ namespace PalmRent.FrontWeb.Controllers
             {
                 endMonthRent = Convert.ToInt32(strEnd);
             }
+        }
+
+        public ActionResult LoadMore(long typeId, string keyWords, string monthRent,
+           string orderByType, long? regionId, int pageIndex)
+        {
+            long cityId = FrontUtils.GetCityId(HttpContext);
+            HouseSearchOptions searchOpt = new HouseSearchOptions();
+            searchOpt.CityId = cityId;
+            searchOpt.CurrentIndex = pageIndex;
+
+            //解析月租部分
+            int? startMonthRent;
+            int? endMonthRent;
+            //ref/out
+            ParseMonthRent(monthRent, out startMonthRent, out endMonthRent);
+            searchOpt.EndMonthRent = endMonthRent;
+            searchOpt.StartMonthRent = startMonthRent;
+
+            searchOpt.Keywords = keyWords;
+            switch (orderByType)
+            {
+                case "MonthRentAsc":
+                    searchOpt.OrderByType = HouseSearchOrderByType.MonthRentAsc;
+                    break;
+                case "MonthRentDesc":
+                    searchOpt.OrderByType = HouseSearchOrderByType.MonthRentDesc;
+                    break;
+                case "AreaAsc":
+                    searchOpt.OrderByType = HouseSearchOrderByType.AreaAsc;
+                    break;
+                case "AreaDesc":
+                    searchOpt.OrderByType = HouseSearchOrderByType.AreaDesc;
+                    break;
+            }
+            searchOpt.PageSize = 10;
+            searchOpt.RegionId = regionId;
+            searchOpt.TypeId = typeId;
+
+            //开始搜索
+            var searchResult = houseService.Search(searchOpt);
+            var houses = searchResult.result;
+            return Json(new AjaxResult { Status = "ok", Data = houses });
+        }
+
+        public ActionResult Search2(long typeId, string keyWords, string monthRent,
+           string orderByType, long? regionId)
+        {
+            long cityId = FrontUtils.GetCityId(HttpContext);
+            var regions = regionService.GetAll(cityId);
+            return View(regions);
         }
 
         public ActionResult Search(long typeId, string keyWords, string monthRent,

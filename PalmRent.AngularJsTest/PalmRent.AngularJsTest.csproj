@@ -69,6 +69,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="%24scope.%24watch监听数据变化.html" />
     <Content Include="AngualrJs--单选框控制.html" />
     <Content Include="AngularJs--ng-model.html" />
     <Content Include="AngularJs--ng-value.html" />
@@ -84,6 +85,7 @@
     <Content Include="ng-model-options设置数据同步时机提交网站性能.html" />
     <Content Include="orderBy数据排序与filter筛选过滤器.html" />
     <Content Include="事件处理指令讲解.html" />
+    <Content Include="使用%24scope处理升降序.html" />
     <Content Include="使用date过滤器处理时间.html" />
     <Content Include="使用limitTo过滤器截取字符.html" />
     <Content Include="使用ng-style动态改变样式.html" />
