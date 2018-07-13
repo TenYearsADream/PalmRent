@@ -86,11 +86,17 @@
     <Content Include="orderBy数据排序与filter筛选过滤器.html" />
     <Content Include="事件处理指令讲解.html" />
     <Content Include="使用%24scope处理升降序.html" />
+    <Content Include="使用%24watch与%24filter过滤器制作数据筛选实例.html" />
     <Content Include="使用date过滤器处理时间.html" />
     <Content Include="使用limitTo过滤器截取字符.html" />
     <Content Include="使用ng-style动态改变样式.html" />
     <Content Include="控制器中如何使用过虑器服务.html" />
     <Content Include="简单实现表单的全选与反选.html" />
+    <Content Include="自定义指令directive的restrict属性说明.html" />
+    <Content Include="自定义指令replace属性详解.html" />
+    <Content Include="自定义指令template函数式操作实例讲解.html" />
+    <Content Include="自定义指令名称的标准规范.html" />
+    <Content Include="自定义过滤器之手机加星过滤器实例.html" />
     <Content Include="通过ng-class动态改变样式类实例操作\1.html" />
     <Content Include="通过ng-class动态改变样式类实例操作\2.html" />
     <Content Include="通过ng-class动态改变样式类实例操作\3.html" />

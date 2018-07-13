@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="Scripts/angular.min.js"></script>
+</head>
+<body>
+    <div ng-app="hd">
+        <div hd-cms></div>
+    </div>
+    <script>
+        var m = angular.module('hd', []);
+        m.directive('hdCms', [function () {
+            return {
+                restrict: 'AEC',//a attr e element  c class
+                template: '后盾网开源CMS系统'
+            }
+        }]);
+    </script>
+
+</body>
+</html>
