@@ -16,6 +16,8 @@ namespace PalmRent.FrontWeb.Controllers
         public IAttachmentService attService { get; set; }
         public ICityService cityService { get; set; }
         public IRegionService regionService { get; set; }
+
+        public IHouseAppointmentService appService { get; set; }
         // GET: House
         public ActionResult Index(long id)
         {
@@ -171,6 +173,22 @@ namespace PalmRent.FrontWeb.Controllers
             //当前用户城市Id
 
             return View(model);
+        }
+
+        public ActionResult MakeAppointment(HouseMakeAppointmentModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                string msg = MVCHelper.GetValidMsg(ModelState);
+                return Json(new AjaxResult { Status = "erorr", ErrorMsg = msg });
+            }
+            long? userId = FrontUtils.GetUserId(HttpContext);
+            appService.AddNew(userId, model.Name,
+                model.PhoneNum, model.HouseId, model.VisitDate);
+            return Json(new AjaxResult
+            {
+                Status = "ok"
+            });
         }
     }
 }
