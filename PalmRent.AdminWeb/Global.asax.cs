@@ -10,6 +10,10 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using PalmRent.IService;
 using PalmRent.CommonMVC;
+using Quartz;
+using Quartz.Impl;
+using PalmRent.AdminWeb.Jobs;
+using Quartz.Spi;
 
 namespace PalmRent.AdminWeb
 {
@@ -51,6 +55,27 @@ namespace PalmRent.AdminWeb
             GlobalFilters.Filters.Add(new PalmRentAuthorizeFilter());
             */
             FilterConfig.RegisterFilters(GlobalFilters.Filters);
+
+            //执行以下方法将定时给老板发邮件
+            //startQuartz();
+        }
+
+        private void startQuartz()
+        {
+            IScheduler sched = new StdSchedulerFactory().GetScheduler();
+
+            //给老板的报表开始
+            JobDetailImpl jdBossReport
+                = new JobDetailImpl("jdBossReport", typeof(BossReportJob));
+            IMutableTrigger triggerBossReport
+                = CronScheduleBuilder.DailyAtHourAndMinute(14, 47).Build();//每天23:45执行一次
+            triggerBossReport.Key = new TriggerKey("triggerBossReport");
+            sched.ScheduleJob(jdBossReport, triggerBossReport);
+            //给老板的报表结束
+
+
+            sched.Start();
+
         }
     }
 }

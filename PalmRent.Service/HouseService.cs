@@ -4,6 +4,7 @@ using PalmRent.Service.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -279,7 +280,21 @@ namespace PalmRent.Service
 
         public int GetTodayNewHouseCount(long cityId)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseEntity> bs = new BaseService<HouseEntity>(ctx);
+                //房子创建的时间是在当前时间内的24个小时，就认为是“今天的房源”
+                //日期相减结果是TimeSpan类型
+                /*
+                return bs.GetAll().Count(h => h.Community.Region.CityId==cityId
+                            && (DateTime.Now - h.CreateDateTime).TotalHours <= 24);*/
+                /*
+    DateTime date24HourAgo = DateTime.Now.AddHours(-24);//算出来一个24小时之前的时间
+    return bs.GetAll().Count(h => h.Community.Region.CityId == cityId
+               && h.CreateDateTime<=date24HourAgo);*/
+                return bs.GetAll().Count(h => h.Community.Region.CityId == cityId
+                           && SqlFunctions.DateDiff("hh", h.CreateDateTime, DateTime.Now) <= 24);
+            }
         }
         /// <summary>
         /// 获取一个城市下,某一个类型的房屋的数量
