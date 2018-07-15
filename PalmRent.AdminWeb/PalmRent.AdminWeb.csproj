@@ -1378,6 +1378,7 @@
     <Compile Include="App_Start\PalmRentExceptionFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminUserController.cs" />
+    <Compile Include="Controllers\HouseAppointmentController.cs" />
     <Compile Include="Controllers\HouseController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PermissionController.cs" />
@@ -1519,6 +1520,7 @@
     <Content Include="Views\House\Edit.cshtml" />
     <Content Include="Views\House\PicUpload.cshtml" />
     <Content Include="Views\House\PicList.cshtml" />
+    <Content Include="Views\HouseAppointment\List.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

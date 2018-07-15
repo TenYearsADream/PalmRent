@@ -4,6 +4,7 @@ using PalmRent.Service.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +44,42 @@ namespace PalmRent.Service
 
         public bool Follow(long adminUserId, long houseAppointmentId)
         {
-            throw new NotImplementedException();
+            using (PalmRentDbContext ctx = new PalmRentDbContext())
+            {
+                BaseService<HouseAppointmentEntity> bs =
+                    new BaseService<HouseAppointmentEntity>(ctx);
+                var app = bs.GetById(houseAppointmentId);
+                if (app == null)
+                {
+                    throw new ArgumentException("不存在的订单id");
+                }
+                //FollowAdminUserId不为null，说明要么是自己已经抢过，要么是已经早早的
+                //被别人抢了
+                if (app.FollowAdminUserId != null)
+                {
+                    return app.FollowAdminUserId == adminUserId;
+                    /*
+                    if(app.FollowAdminUserId==adminUserId)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }*/
+                }
+                //如果/FollowAdminUserId为null，说明有抢的机会
+                app.FollowAdminUserId = adminUserId;
+                try
+                {
+                    ctx.SaveChanges();
+                    return true;
+                }//如果抛出DbUpdateConcurrencyException说明抢单失败（乐观锁）
+                catch (DbUpdateConcurrencyException)
+                {
+                    return false;
+                }
+            }
         }
 
         private HouseAppointmentDTO ToDTO(HouseAppointmentEntity houseApp)
@@ -136,5 +172,7 @@ namespace PalmRent.Service
                 return count;
             }
         }
+
+        
     }
 }
