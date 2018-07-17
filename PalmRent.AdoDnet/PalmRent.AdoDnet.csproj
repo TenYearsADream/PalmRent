@@ -78,6 +78,7 @@
     <Content Include="sa账号启用.txt" />
     <Content Include="Web.config" />
     <Content Include="数据类型.txt" />
+    <Content Include="通过代码创建数据库和表.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

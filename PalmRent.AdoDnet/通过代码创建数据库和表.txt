@@ -1,0 +1,51 @@
+﻿--在这里编写SQL命令。
+--1.创建一个数据库(直接创建一个数据库，没有设置任何特殊选项，都是使用默认的。)
+create database MyDatabaseOne;
+--2.删除数据库
+drop database MyDatabaseOne;
+
+DROP DATABASE MYSECONDDATABASE;
+
+--3.创建数据库的时候设置一些参数选项
+create database MyDatabaseOne
+on primary
+(
+	--配置主数据文件的选项
+	name='MyDatabaseOne',--主数据文件的逻辑名称
+	filename='c:\MyDatabaseOne.mdf',--主数据文件的实际保存路径
+	size=5MB,
+	maxsize=150MB,
+	filegrowth=20%
+)
+log on
+(
+	--配置日志文件的选项
+	name='MyDatabaseOne_log',--日志文件的逻辑名称
+	filename='c:\MyDatabaseOne_log.ldf',--日志文件的实际保存路径
+	size=5mb,--日志文件的初始大小
+	filegrowth=5mb
+)
+
+-------------在数据库中创建一个表-------------------------
+--将代码环境切换到MyDatabaseOne下
+use MyDatabaseOne
+
+create table Departments
+(
+	AutoID int identity(1,1) primary key,
+	DepartmentName nvarchar(50) not null
+)
+
+--通过代码，删除master数据库下的某些表
+use master
+
+drop database ...
+drop table Departments
+
+drop table TblTeacher
+drop table users
+
+
+
+---创建一个员工表
+--<员工表>：员工Id,身份证号，姓名，性别，入职日期，年龄，地址，电话，所属部门、Emailcreate table Employees(	EmpID int identity(1,1) primary key,	EmpIDCard varchar(18) not null,	EmpName nvarchar(50) null,	EmpGender bit not null,	EmpJoinDate datetime,	EmpAge int,	EmpAddress nvarchar(300),	EmpPhone varchar(100),	DeptID int not null,	EmpEmail varchar(100))drop table Employeesuse MyDatabaseOne;
