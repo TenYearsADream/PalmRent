@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.AngularJsTest", "P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.AdoDnet", "PalmRent.AdoDnet\PalmRent.AdoDnet.csproj", "{92EEA0C7-4D65-4F7E-8CD1-1BB64F34DEDF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PalmRent.VueJsTest", "PalmRent.VueJsTest\PalmRent.VueJsTest.csproj", "{7C2C256D-80A0-4FA5-9F79-BF5759BD4ADD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{92EEA0C7-4D65-4F7E-8CD1-1BB64F34DEDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92EEA0C7-4D65-4F7E-8CD1-1BB64F34DEDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92EEA0C7-4D65-4F7E-8CD1-1BB64F34DEDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C2C256D-80A0-4FA5-9F79-BF5759BD4ADD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C2C256D-80A0-4FA5-9F79-BF5759BD4ADD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C2C256D-80A0-4FA5-9F79-BF5759BD4ADD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C2C256D-80A0-4FA5-9F79-BF5759BD4ADD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

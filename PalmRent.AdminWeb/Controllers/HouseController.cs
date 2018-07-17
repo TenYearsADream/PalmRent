@@ -84,7 +84,7 @@ namespace PalmRent.AdminWeb.Controllers
             model.types = types;
             return View(model);
         }
-
+        [ValidateInput(false)]
         [CheckPermission("House.Add")]
         [HttpPost]
         public ActionResult Add(HouseAddModel model)

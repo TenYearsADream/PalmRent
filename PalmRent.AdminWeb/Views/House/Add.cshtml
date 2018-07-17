@@ -43,7 +43,7 @@
         <div class="formControls col-1">
             <input type="text" class="input-text" datatype="n" id="area" name="area" />
         </div>
-        <div class="formControls col-1">平方米</div>
+        <div class="formControls col-1">元</div>
         <label class="form-label col-2"><span class="c-red">*</span>装修：</label>
         <div class="formControls col-2">
             @Html.DropDownList("DecorateStatusId", new SelectList(Model.decorateStatuses, "Id", "Name"))
@@ -61,7 +61,7 @@
         <div class="formControls col-2">
             <input type="text" class="input-text" id="direction" datatype="*1-10" name="direction" />
         </div>
-        <div class="formControls col-1"></div>
+        <div class="formControls col-1">元</div>
         <label class="form-label col-2"><span class="c-red">*</span>可看房时间：</label>
         <div class="formControls col-2">
             <input type="text" class="input-text Wdate" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" id="lookableDateTime" name="lookableDateTime" />
@@ -90,9 +90,9 @@
     <div class="row cl">
         <div class="formControls col-2">房源描述</div>
         <div class="formControls col-10">
-            <textarea id="description" name="description"></textarea>
-            @*<script id="containerDesc" name="description" type="text/plain">
-            </script>*@
+            <!--<textarea id="description" name="description"></textarea>-->
+            <script id="containerDesc" name="description" type="text/plain">
+            </script>
         </div>
     </div>
     <div class="row cl">
