@@ -1,0 +1,150 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data.SqlClient;
+
+namespace _01通过ado.net连接数据库
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            #region 如何打开连接！
+            //连接数据库的步骤：
+            //1.创建连接字符串
+            //Data Source=STEVE-PC;
+            //Initial Catalog=itcast2014;
+            //Integrated Security=True
+            //string constr = "Data Source=STEVE-PC;INITIAL CATALOG=ITCAST2014;integrated Security=true";
+            //server=.;database=itcast2014;uid=sa;pwd=123
+
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;User ID=sa;Password=123";
+            //string constr = "Data Source=STEVE-PC;INITIAL CATALOG=ITCAST2014;integrated Security=true";
+            ////2.创建连接对象
+            //using (SqlConnection con = new SqlConnection(constr))
+            //{
+            //    //测试，打开连接
+            //    //3.打开连接（如果打开数据连接没有问题，表示连接成功！~）
+            //    con.Open();
+            //    Console.WriteLine("打开连接成功~!");
+            //    //4.关闭连接，释放资源
+            //    //con.Close();
+
+            //    //con.Dispose();
+            //}
+
+            //Console.WriteLine("关闭连接，释放资源！！！！");
+            //Console.ReadKey();
+
+            #endregion
+
+
+            #region 通过ado.net向表中插入一条数据
+
+            ////1.连接字符串
+            //string constr = "Data Source=STEVE-PC;Initial Catalog=itcast2014;Integrated Security=True";
+            ////2.创建连接对象
+            //using (SqlConnection con = new SqlConnection(constr))
+            //{
+
+            //    //4.编写sql语句
+            //    string sql = "insert into TblPerson values('吴承广',20,170,1)";
+            //    //5.创建一个执行sql语句的对象（命令对象）SqlCommand
+            //    using (SqlCommand cmd = new SqlCommand(sql, con))
+            //    {
+
+            //        //3.打开连接(连接对象最晚打开，最早关闭！,节省资源)
+            //        con.Open();
+            //        //6.开始执行sql语句
+            //        //ExecuteNonQuery()这个方法有一个返回值是int类型，表示执行insert、delete、update语句后，所影响的行数。特别注意：ExecuteNonQuery()只有执行insert、delete、update语句的时候会返回所影响的行数，执行任何其他Sql语句永远返回-1.
+            //        int r = cmd.ExecuteNonQuery();//insert\delete\update语句时
+            //        //cmd.ExecuteScalar(); //当执行返回单个结果的时候。
+            //        //cmd.ExecuteReader(); //当查询出多行，多列结果的时候
+            //        Console.WriteLine("成功插入了{0}行数据。", r);
+            //    }
+            //}
+            //Console.ReadKey();
+            #endregion
+
+
+            #region 删除一条数据
+
+            ////1.连接字符串
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            ////2.连接对象
+            //using (SqlConnection con = new SqlConnection(constr))
+            //{
+            //    //3.sql语句
+            //    string sql = "delete from TblPerson where autoId=37";
+            //    //4.创建SqlCommand对象
+            //    using (SqlCommand cmd = new SqlCommand(sql, con))
+            //    {
+            //        //5.打开连接
+            //        con.Open();
+            //        //6.执行
+            //        int r = cmd.ExecuteNonQuery();
+            //        Console.WriteLine("成功删除了{0}行数据。", r);
+            //    }
+            //}
+            //Console.ReadLine();
+            #endregion
+
+
+            #region 修改操作update
+            ////1.创建连接字符串
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+
+            ////2.连接对象
+            //using (SqlConnection con = new SqlConnection(constr))
+            //{
+            //    //3.sql语句
+            //    string sql = "update TblPerson set uName='汪国伟',age=20,height=176 where autoId=44";
+            //    //4.创建SqlCommand
+            //    using (SqlCommand cmd = new SqlCommand(sql, con))
+            //    {
+            //        //5.打开连接
+            //        con.Open();
+            //        //6.执行
+            //        int r = cmd.ExecuteNonQuery();
+            //        Console.WriteLine("成功更新了{0}条数据。", r);
+            //    }
+            //}
+            //Console.ReadKey();
+            #endregion
+
+
+            #region 查询出表中的记录条数
+            //1.连接字符串
+            string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            //2.创建连接对象
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                //3.sql语句
+                string sql = "select count(*) from TblPerson";
+                //4.创建命令对象SqlCommand
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    //5.打开连接
+                    con.Open();
+                    //6.执行
+                    //注意：当sql语句执行的时候，如果是聚合函数，那么ExecuteScalar()返回的不可能是null，因为聚合函数不会返回null,但是如果sql语句使用的不是聚合函数，那么ExecuteScalar()方法是有可能返回null的，那么在使用count变量的时候就需要先判断是否为null了。
+                    //object count = (int)cmd.ExecuteScalar();
+
+                    object count = Convert.ToInt32(cmd.ExecuteScalar());
+                    Console.WriteLine("TblPerson表中共有{0}条数据。", count);
+                }
+            }
+            Console.ReadKey();
+            #endregion
+
+
+
+
+
+
+
+        }
+    }
+}

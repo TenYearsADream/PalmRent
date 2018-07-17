@@ -1,0 +1,102 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data.SqlClient;
+
+namespace _02通过调用ExecuteReader方法获取多行多列数据
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            #region 版本1
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            //using (SqlConnection con = new SqlConnection(constr))
+            //{
+            //    string sql = "select * from TblPerson";
+            //    using (SqlCommand cmd = new SqlCommand(sql, con))
+            //    {
+            //        con.Open();
+            //        //通过调用ExecuteReader()方法，将给定的sql语句在服务器端执行。
+            //        //执行完毕后，服务器端就已经查询出了数据。但是数据是保存在数据库服务器的内存当中。并没有返回给应用程序。只是返回给应用程序一个reader对象，这个对象就是用来获取数据的对象。
+            //        using (SqlDataReader reader = cmd.ExecuteReader())
+            //        {
+            //            //接下来就要通过reader对象一条一条获取数据
+            //            //1.在获取数据之前，先判断一下本次执行查询后，是否查询到了数据。
+            //            if (reader.HasRows)//如果有数据，则为true,否则为false
+            //            {
+            //                //2.如果有数据，那么接下来就要一条一条获取数据
+            //                //每次获取数据之前，都要先调用reader.Read()方法，向后移动一条数据，如果成功移动到了某条数据上，则返回true,否则返回false
+            //                while (reader.Read())
+            //                {
+            //                    //获取当前reader指向的数据
+            //                    //reader.FieldCount ,可以获取当前查询语句查询出的列的个数。
+            //                    for (int i = 0; i < reader.FieldCount; i++)
+            //                    {
+            //                        //当遇到数据库中的null值的时候，通过reader.GetValue()或者reader[]索引器来获取列的值，拿到的是DBNull.Value，不是C#的null。而DBNull.Value的ToString()方法返回的是空字符串，所以最终并没有报错。
+            //                        //但是通过reader[]索引器，可以使用列名来获取列的值
+            //                        Console.Write(reader[i] + "    |    ");
+            //                        //Console.Write(reader["autoId"]);
+
+            //                        //根据列名称获取列的索引
+            //                        //reader.GetOrdinal();
+
+            //                        //GetValue()只能通过列索引来获取列的值。
+            //                        //Console.Write(reader.GetValue(i) + "    |    ");
+
+            //                        //通过下面这种方式读取到的数据直接就是对于的类型，不是object类型。使用起来更方便，。
+            //                        //reader.GetXxxxx();//使用强类型读取列中的数据。
+            //                    }
+            //                    Console.WriteLine();
+            //                }
+            //            }
+            //            else
+            //            {
+            //                Console.WriteLine("没有查询到任何数据！！！");
+            //            }
+            //        }
+            //    }
+
+            //}
+
+            #endregion
+
+
+            #region 版本2
+
+            string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string sql = "select * from TblPerson";
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            //注意：通过reader.GetXxxxx()方式来获取表中的数据，如果数据为null那么就报异常了。此时需要手动写代码来判断数据是否为null
+                            while (reader.Read())
+                            {
+                                //autoId, uName, age, height, gender
+                                Console.Write(reader.GetInt32(0) + "\t|\t");
+                                Console.Write(reader.GetString(1) + "\t|\t");
+                                Console.Write(reader.GetInt32(2) + "\t|\t");
+
+                                Console.Write(reader.IsDBNull(3) ? "NULL" : reader.GetInt32(3) + "\t|\t");
+                                // Console.Write(reader.GetInt32(3) + "\t|\t");如果为null,则报错！
+                                Console.Write(reader.IsDBNull(4) ? "NULL" : reader.GetBoolean(4) + "\t|\t");
+                                Console.WriteLine();
+                            }
+
+                        }
+                    }
+                }
+            }
+            #endregion
+
+            Console.ReadKey();
+        }
+    }
+}
