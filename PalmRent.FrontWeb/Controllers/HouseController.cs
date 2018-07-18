@@ -33,6 +33,7 @@ namespace PalmRent.FrontWeb.Controllers
             model.House = house;
             model.Pics = pics;
             model.Attachments = attachments;*/
+            /*
             string cacheKey = "HouseIndex_" + id;
             //先尝试去缓存中找
             HouseIndexViewModel model = (HouseIndexViewModel)HttpContext.Cache[cacheKey];
@@ -54,7 +55,30 @@ namespace PalmRent.FrontWeb.Controllers
                 HttpContext.Cache.Insert(cacheKey, model, null,
                     DateTime.Now.AddMinutes(1), TimeSpan.Zero);
             }
-                return View(model);
+                return View(model);*/
+            string cacheKey = "HouseIndex_" + id;
+            //先尝试去缓存中找
+            HouseIndexViewModel model =
+                MemcacheMgr.Instance.GetValue<HouseIndexViewModel>(cacheKey);
+            if (model == null)//缓存中没有找到
+            {
+                var house = houseService.GetById(id);
+                if (house == null)
+                {
+                    return View("Error", (object)"不存在的房源id");
+                }
+                var pics = houseService.GetPics(id);
+                var attachments = attService.GetAttachments(id);
+
+                model = new HouseIndexViewModel();
+                model.House = house;
+                model.Pics = pics;
+                model.Attachments = attachments;
+                //存入缓存
+                MemcacheMgr.Instance.SetValue(cacheKey, model
+                    , TimeSpan.FromMinutes(1));
+            }
+            return View(model);
         }
 
         /// <summary>

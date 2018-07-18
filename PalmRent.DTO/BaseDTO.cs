@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalmRent.DTO
 {
+    [Serializable]
     public abstract class BaseDTO
     {
         public long Id { get; set; }

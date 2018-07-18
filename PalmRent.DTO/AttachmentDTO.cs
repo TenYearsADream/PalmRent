@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalmRent.DTO
 {
+    [Serializable]
     public class AttachmentDTO:BaseDTO
     {
         public String Name { get; set; }

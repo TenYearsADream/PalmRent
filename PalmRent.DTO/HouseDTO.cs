@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PalmRent.DTO
 {
+    [Serializable]
     public class HouseDTO:BaseDTO
     {
         public long CityId { get; set; }

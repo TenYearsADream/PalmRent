@@ -6,6 +6,7 @@ using System.Web;
 
 namespace PalmRent.FrontWeb.Models
 {
+    [Serializable]
     public class HouseIndexViewModel
     {
         public HouseDTO House { get; set; }
