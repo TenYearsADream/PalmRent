@@ -116,7 +116,7 @@ namespace PalmRent.AdminWeb.Controllers
             dto.TypeId = model.TypeId;
 
             long houseId = houseService.AddNew(dto);
-         //   CreateStaticPage(houseId); //生成静态页面           
+           CreateStaticPage(houseId); //生成静态页面           
 
             //生成房源查看的html文件
             return Json(new AjaxResult { Status = "ok" });
@@ -134,7 +134,7 @@ namespace PalmRent.AdminWeb.Controllers
             model.Attachments = attachments;
             string html = MVCHelper.RenderViewToString(this.ControllerContext, @"~/Views/House/StaticIndex.cshtml",
                 model);
-            System.IO.File.WriteAllText(@"E:\快盘\NextBig\NET课程\NET掌上租\上课代码\ZSZ\ZSZ.FrontWeb\" + houseId + ".html", html);
+            System.IO.File.WriteAllText(@"H:\code\PalmRent\PalmRent.FrontWeb\" + houseId + ".html", html);
         }
 
         [CheckPermission("House.Edit")]

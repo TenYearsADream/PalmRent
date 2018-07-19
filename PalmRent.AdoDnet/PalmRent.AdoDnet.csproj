@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="sa账号启用.txt" />
+    <Content Include="SqlCommand增删改查2.txt" />
     <Content Include="SqlDataReader使用.png" />
     <Content Include="Web.config" />
     <Content Include="数据类型.txt" />

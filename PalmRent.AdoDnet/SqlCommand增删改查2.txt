@@ -1,0 +1,197 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace _03实现对班级表的增删改查
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        //窗体加载事件
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //将TblClass表中的数据读取到一个List<T>中
+
+            LoadData();
+        }
+
+        private void LoadData()
+        {
+            List<TblClass> list = new List<TblClass>();
+            string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string sql = "select * from TblClass";
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        //判断是否查询到了数据
+                        if (reader.HasRows)
+                        {
+                            //一条一条读取数据
+                            while (reader.Read())
+                            {
+                                //tClassId, tClassName, tClassDesc
+                                TblClass model = new TblClass();
+                                model.TClassID = reader.GetInt32(0);
+                                model.TClassName = reader.GetString(1);
+                                model.TClassDesc = reader.IsDBNull(2) ? null : reader.GetString(2);
+                                list.Add(model);//把model对象加到list集合中
+                            }
+                        }
+                    }
+                }
+            }
+
+            //数据绑定需要注意的一点：
+            //数据绑定的时候，只认“属性”，不认“字段”。内部通过反射来实现。
+            this.dgvClass.DataSource = list;//数据绑定
+
+        }
+
+        //增加一条数据
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            #region 版本1
+
+            ////1.采集用户的输入
+            //string className = txtClassName.Text.Trim();
+            //string classDesc = txtClassDesc.Text.Trim();
+
+            ////2.执行插入操作！
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            //using (SqlConnection con = new SqlConnection(constr))
+            //{
+            //    string sql = string.Format("insert into TblClass values(N'{0}',N'{1}')", className, classDesc);
+            //    using (SqlCommand cmd = new SqlCommand(sql, con))
+            //    {
+            //        con.Open();
+            //        int r = cmd.ExecuteNonQuery();
+            //        if (r > 0)
+            //        {
+            //            // MessageBox.Show("插入成功！");
+            //            this.Text = "插入成功！";
+            //            //重新加载DataGridView控件
+            //            LoadData();
+            //        }
+            //        else
+            //        {
+            //            //MessageBox.Show("插入了" + r + "行。！");
+            //            this.Text = "插入了" + r + "行。！";
+            //        }
+            //    }
+            //}
+            #endregion
+
+            #region 版本2
+
+            //1.采集数据
+            string className = txtClassName.Text.Trim();
+            string classDesc = txtClassDesc.Text.Trim();
+
+            //2.执行插入操作！
+            string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string sql = string.Format("insert into TblClass output inserted.tClassId values(N'{0}',N'{1}')", className, classDesc);
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    con.Open();
+                    object obj = cmd.ExecuteScalar();
+                    this.Text = "刚刚插入的记录的自动编号是：" + obj.ToString();
+                }
+            }
+
+
+            #endregion
+
+
+        }
+
+
+        //行获取焦点事件
+        private void dgvClass_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            //获取当前选中的行对象
+            DataGridViewRow currentRow = this.dgvClass.Rows[e.RowIndex];
+
+            //获取当前行中绑定的TblClass数据对象
+            TblClass model = currentRow.DataBoundItem as TblClass;
+            if (model != null)
+            {
+                lblID.Text = model.TClassID.ToString();
+                txtEditClassName.Text = model.TClassName;
+                txtEditDesc.Text = model.TClassDesc;
+            }
+        }
+
+
+
+        //保存数据
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //1.采集用户输入
+            TblClass model = new TblClass();
+            model.TClassID = Convert.ToInt32(lblID.Text);
+            model.TClassName = txtEditClassName.Text.Trim();
+            model.TClassDesc = txtEditDesc.Text.Trim();
+
+            //2.连接数据库，执行删除操作！
+            string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string sql = string.Format("update TblClass set tClassName='{0}',tClassDesc='{1}' where tClassId={2}", model.TClassName, model.TClassDesc, model.TClassID);
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    con.Open();
+                    int r = cmd.ExecuteNonQuery();
+                    this.Text = "更新了" + r + "行。";
+
+                    //重新加载，绑定DataGridView
+                    LoadData();
+
+                }
+            }
+        }
+
+
+        //删除数据
+        private void button3_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("确定要删除吗？", "操作提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                int tClassId = Convert.ToInt32(lblID.Text);
+
+                string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    string sql = string.Format("delete from TblClass where tClassId={0}", tClassId);
+                    using (SqlCommand cmd = new SqlCommand(sql, con))
+                    {
+                        con.Open();
+                        int r = cmd.ExecuteNonQuery();
+                        this.Text = "删除了" + r + "条数据。";
+                        //重新绑定数据
+                        LoadData();
+                    }
+                }
+            }
+
+        }
+    }
+}

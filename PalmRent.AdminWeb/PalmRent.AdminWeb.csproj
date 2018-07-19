@@ -1534,6 +1534,7 @@
     <Content Include="Views\House\PicUpload.cshtml" />
     <Content Include="Views\House\PicList.cshtml" />
     <Content Include="Views\HouseAppointment\List.cshtml" />
+    <Content Include="Views\House\StaticIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
