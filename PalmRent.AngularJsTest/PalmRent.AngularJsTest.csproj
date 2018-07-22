@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="%24scope.%24watch监听数据变化.html" />
+    <Content Include="%24timeout与%24interval实际使用场景分析与实例讲解.html" />
     <Content Include="AngualrJs--单选框控制.html" />
     <Content Include="AngularJs--ng-model.html" />
     <Content Include="AngularJs--ng-value.html" />
@@ -91,8 +92,10 @@
     <Content Include="scope隔离作用域之%40单向文本绑定.html" />
     <Content Include="scope隔离作用域之=&amp;调用父作用域中函数.html" />
     <Content Include="scope隔离作用域之=双向文本绑定.html" />
+    <Content Include="tab面板组件的指令实现\1.html" />
     <Content Include="view\hdcms.html" />
     <Content Include="事件处理指令讲解.html" />
+    <Content Include="使用%24scope.%24apply进行数据脏检查.html" />
     <Content Include="使用%24scope处理升降序.html" />
     <Content Include="使用%24watch与%24filter过滤器制作数据筛选实例.html" />
     <Content Include="使用date过滤器处理时间.html" />

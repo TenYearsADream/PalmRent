@@ -1,0 +1,173 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace _04登录验证_
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+
+        //验证用户登录是否成功！
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            #region 使用带参数的sql语句
+
+            string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string sql = "select count(*) from users where loginId=@loingid and loginPwd=@password";
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    //1.当使用带参数的sql语句的时候，
+                    //1>sql语句中会出现参数。
+                    //2>如果Sql语句中有参数，那么必须在command对象中提供对应的参数和值。
+
+                    //创建两个参数对象
+                    //SqlParameter paramLoginId = new SqlParameter("@loingid", SqlDbType.VarChar, 50) { Value = txtLoginId.Text.Trim() };
+
+                    //SqlParameter paramPassword = new SqlParameter("@password", SqlDbType.VarChar, 50) { Value = txtLoginPwd.Text };
+
+                    //cmd.Parameters.Add(paramLoginId);
+                    //cmd.Parameters.Add(paramPassword);
+
+                    ////---------------------------------------------
+                    //SqlParameter[] pms = new SqlParameter[] { 
+                    // new SqlParameter("@loingid", SqlDbType.VarChar, 50) { Value = txtLoginId.Text.Trim() },
+                    // new SqlParameter("@password", SqlDbType.VarChar, 50) { Value = txtLoginPwd.Text }
+                    //};
+
+                    ////向command对象中增加参数
+                    //cmd.Parameters.AddRange(pms);
+
+                    //----------------------------------------
+                    cmd.Parameters.AddWithValue("@loingid", txtLoginId.Text.Trim());
+                    cmd.Parameters.AddWithValue("@password", txtLoginPwd.Text);
+
+                    con.Open();
+
+                    int r = (int)cmd.ExecuteScalar();
+                    if (r > 0)
+                    {
+                        this.Text = "登录成功！";
+                    }
+                    else
+                    {
+                        this.Text = "登录失败！";
+                    }
+                }
+            }
+
+            #endregion
+
+
+            #region 使用拼接sql的方式（不安全，有sql注入攻击的问题）
+
+            ////1.采集数据
+            //string loginId = txtLoginId.Text.Trim();
+            //string password = txtLoginPwd.Text;
+
+            ////2.连接数据库校验登录是否成功
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            //using (SqlConnection con = new SqlConnection(constr))
+            //{
+            //    string sql = string.Format("select count(*) from users where loginId='{0}' and loginPwd='{1}'", loginId, password);
+            //    using (SqlCommand cmd = new SqlCommand(sql, con))
+            //    {
+            //        con.Open();
+            //        int count = (int)cmd.ExecuteScalar();
+            //        if (count > 0)
+            //        {
+            //            this.BackColor = Color.Green;
+            //        }
+            //        else
+            //        {
+            //            this.BackColor = Color.Red;
+            //        }
+            //    }
+            //}
+            #endregion
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+
+        //登录校验用户名是否存在以及密码是否正确
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //1.采集数据
+            string loginId = txtLoginId.Text.Trim();
+
+            string pwd = txtLoginPwd.Text;
+
+            //2.现根据用户名去数据库中查找，是否有对应的用户
+            string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string sql = string.Format("select * from users where loginId='{0}'", loginId);
+                using (SqlCommand cmd = new SqlCommand(sql, con))
+                {
+                    con.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            //存在该用户
+                            if (reader.Read())
+                            {
+                                //3.如果有对应的用户，再比较密码是否正确
+                                //获取查询出的密码，和用户输入的密码进行比较
+                                string dbpwd = reader.GetString(2);
+                                if (pwd == dbpwd)
+                                {
+                                    //登录成功！
+                                    this.Text = "登录成功！ ";
+
+                                    //启用修改密码按钮
+                                    button3.Enabled = true;
+
+                                    //获取当前登录用户的主键Id，设置到GlobalHelper
+                                    GlobalHelper._autoId = reader.GetInt32(0);
+                                }
+                                else
+                                {
+                                    this.Text = "密码错误！";
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //4.如果没有该用户，直接提示用户：“用户名不存在！”
+                            this.Text = "用户不存在！";
+                        }
+                    }
+                }
+            }
+
+
+
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Form2 f2 = new Form2();
+            f2.Show();
+        }
+    }
+}

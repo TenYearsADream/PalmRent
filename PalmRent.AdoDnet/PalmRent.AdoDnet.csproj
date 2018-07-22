@@ -80,6 +80,7 @@
     <Content Include="SqlCommand增删改查2.txt" />
     <Content Include="SqlDataReader使用.png" />
     <Content Include="Web.config" />
+    <Content Include="带参数的sql语句.txt" />
     <Content Include="数据类型.txt" />
     <Content Include="通过代码创建数据库和表.txt" />
     <Content Include="通过调用ExecuteReader方法获取多行多列数据.txt" />
