@@ -69,8 +69,13 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="%24cacheFactory的缓存实例讲解.html" />
+    <Content Include="%24http服务获取后台数据.html" />
+    <Content Include="%24http服务请求缓存操作减少服务器压力加快页面展示.html" />
+    <Content Include="%24sce服务安全的处理html数据.html" />
     <Content Include="%24scope.%24watch监听数据变化.html" />
     <Content Include="%24timeout与%24interval实际使用场景分析与实例讲解.html" />
+    <Content Include="%24window服务的实例讲解.html" />
     <Content Include="AngualrJs--单选框控制.html" />
     <Content Include="AngularJs--ng-model.html" />
     <Content Include="AngularJs--ng-value.html" />
