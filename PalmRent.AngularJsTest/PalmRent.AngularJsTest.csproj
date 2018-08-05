@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="%24cacheFactory的缓存实例讲解.html" />
+    <Content Include="%24http服务之后台接收POST数据的几种方式.html" />
     <Content Include="%24http服务获取后台数据.html" />
     <Content Include="%24http服务请求缓存操作减少服务器压力加快页面展示.html" />
     <Content Include="%24sce服务安全的处理html数据.html" />

@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.SqlClient;
+
+namespace _01SqlDataAdapter使用
+{
+    public partial class Form1 : Form
+    {
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            //string sql = "select * from TblPerson";
+            //DataTable dt = new DataTable();
+            //using (SqlDataAdapter adapter = new SqlDataAdapter(sql, constr))
+            //{
+            //    adapter.Fill(dt);//实现了从数据库中读取数据并加载到DataTable中。
+            //}
+            //this.dataGridView1.DataSource = dt;//数据绑定
+
+
+
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            string sql = "select * from T_Customers";
+
+            this.dataGridView1.DataSource = _02封装SqlHelper类.SqlHelper.ExecuteDataTable(sql);
+          
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //1.创建一个DataSet
+            //DataSet就是一个集合，内存数据库，临时数据库。
+            DataSet ds = new DataSet("School");
+
+            //2.创建一张表
+            DataTable dt = new DataTable("Student");
+
+            //2.1向dt表中创建一些列
+            DataColumn dcAutoId = new DataColumn("AutoID", typeof(int));
+            //设置列为自动编号
+            dcAutoId.AutoIncrement = true;
+            dcAutoId.AutoIncrementSeed = 1;
+            dcAutoId.AutoIncrementStep = 1;
+            //把dcAutoId列加到dt表中
+            dt.Columns.Add(dcAutoId);
+
+            //增加一个姓名列
+            DataColumn dcUserName = dt.Columns.Add("UserName", typeof(string));
+            //设置列不允许为空
+            dcUserName.AllowDBNull = false;
+
+            //增加一个年龄列
+            dt.Columns.Add("UserAge", typeof(int));
+
+
+            //-------------------向dt表中增加一些行数据---------------------
+            //创建一个行对象
+            DataRow dr1 = dt.NewRow();//根据dt表结构创建一个行对象
+            dr1["UserName"] = "胡飞翔";
+            dr1["UserAge"] = 21;
+            //把该行对象增加到dt中
+            dt.Rows.Add(dr1);
+
+            //---再增加一行
+            DataRow dr2 = dt.NewRow();//根据dt表结构创建一个行对象
+            dr2["UserName"] = "赵宇星";
+            dr2["UserAge"] = 23;
+            dt.Rows.Add(dr2);
+
+            //3.把dt加到ds中。
+            ds.Tables.Add(dt);
+
+
+            this.dataGridView1.DataSource = ds.Tables[0];
+        }
+    }
+}

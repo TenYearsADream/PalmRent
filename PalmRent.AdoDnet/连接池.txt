@@ -1,0 +1,82 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data.SqlClient;
+using System.Diagnostics;
+
+namespace _01ado.net连接池
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            #region 启用Ado.net连接池的效果
+
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True";
+            ////默认情况下.net启用了连接池。
+            ////默认情况下ado.net连接池是被启用的
+            //Stopwatch watch = new Stopwatch();
+            //watch.Start();
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    using (SqlConnection con = new SqlConnection(constr))
+            //    {
+            //        con.Open();
+            //        con.Close();//当启用Ado.net连接池后，调用con.Close()方法并不会关闭连接，而是把当前连接对象放入到连接池中。
+            //    }
+            //}
+            //watch.Stop();
+            //Console.WriteLine(watch.Elapsed);
+            //Console.ReadKey();
+            #endregion
+
+
+
+            #region 禁用ado.net连接池的效果
+
+            //string constr = "Data Source=steve-pc;Initial Catalog=itcast2014;Integrated Security=True;Pooling=false";
+            ////默认情况下.net启用了连接池。
+            ////默认情况下ado.net连接池是被启用的
+            //Stopwatch watch = new Stopwatch();
+            //watch.Start();
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    using (SqlConnection con = new SqlConnection(constr))
+            //    {
+            //        con.Open();
+            //        con.Close();
+            //    }
+            //}
+            //watch.Stop();
+            //Console.WriteLine(watch.Elapsed);
+            //Console.ReadKey();
+            #endregion
+            
+
+            //通过观察发现：
+            //当启用Ado.net连接池后，其实只会创建一个连接对象，并且该连接对象默认并不会立刻关闭，后面的所有其他连接对象都是使用的这个连接对象。
+
+            //禁用连接池后，每次创建一个连接对象，然后关闭连接。此时会真正的创建多个连接对象并每次登录、退出。
+
+
+
+            //---------------ado.net连接池使用注意事项：
+            //1.
+
+
+            //凡是需要用到“池”的地方，一般都会存在两种情况：
+            //1.创建对象比较费时。
+            //2.对象使用比较频繁。
+
+            //池的作用：提高了创建对象的效率。
+
+            
+
+
+
+
+
+        }
+    }
+}

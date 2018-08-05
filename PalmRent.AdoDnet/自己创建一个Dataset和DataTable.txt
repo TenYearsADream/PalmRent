@@ -1,0 +1,80 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Data;
+
+namespace _02自己创建一个Dataset和DataTable
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //1.创建一个DataSet
+            //DataSet就是一个集合，内存数据库，临时数据库。
+            DataSet ds = new DataSet("School");
+
+            //2.创建一张表
+            DataTable dt = new DataTable("Student");
+
+            //2.1向dt表中创建一些列
+            DataColumn dcAutoId = new DataColumn("AutoID", typeof(int));
+            //设置列为自动编号
+            dcAutoId.AutoIncrement = true;
+            dcAutoId.AutoIncrementSeed = 1;
+            dcAutoId.AutoIncrementStep = 1;
+            //把dcAutoId列加到dt表中
+            dt.Columns.Add(dcAutoId);
+
+            //增加一个姓名列
+            DataColumn dcUserName = dt.Columns.Add("UserName", typeof(string));
+            //设置列不允许为空
+            dcUserName.AllowDBNull = false;
+
+            //增加一个年龄列
+            dt.Columns.Add("UserAge", typeof(int));
+
+
+            //-------------------向dt表中增加一些行数据---------------------
+            //创建一个行对象
+            DataRow dr1 = dt.NewRow();//根据dt表结构创建一个行对象
+            dr1["UserName"] = "胡飞翔";
+            dr1["UserAge"] = 21;
+            //把该行对象增加到dt中
+            dt.Rows.Add(dr1);
+
+            //---再增加一行
+            DataRow dr2 = dt.NewRow();//根据dt表结构创建一个行对象
+            dr2["UserName"] = "赵宇星";
+            dr2["UserAge"] = 23;
+            dt.Rows.Add(dr2);
+
+            //3.把dt加到ds中。
+            ds.Tables.Add(dt);
+
+            Console.WriteLine("------------遍历表中的数据---------------------------");
+
+
+            //1.遍历DataSet中的每张表
+            for (int i = 0; i < ds.Tables.Count; i++)
+            {
+                //输出每个表的表名
+                Console.WriteLine("表名：{0}", ds.Tables[i].TableName);
+                //遍历表中的每一行
+                for (int r = 0; r < ds.Tables[i].Rows.Count; r++)
+                {
+                    //获取每一行
+                    DataRow currentRow = ds.Tables[i].Rows[r];
+                    //输出当前行中的每一列
+                    for (int c = 0; c < ds.Tables[i].Columns.Count; c++)
+                    {
+                        Console.Write(currentRow[c] + "   |   ");
+                    }
+                    Console.WriteLine();
+                }
+            }
+            Console.WriteLine("ok");
+            Console.ReadKey();
+        }
+    }
+}
