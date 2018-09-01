@@ -1,0 +1,95 @@
+﻿select * from TblPerson
+
+select * from PhoneNum
+
+
+select * from PhoneType
+
+select pid,pname,pcellPhone,ptname,ptid from PhoneNum pn inner join PhoneType as pt on pn.pTypeId=pt.ptid
+
+
+select * from [user]
+
+create table [user](	uId int identity(1,1) primary key,	name varchar(50),	level int  --1骨灰 2大虾 3菜鸟)insert into [user] (name,level) values('犀利哥',1)insert into [user] (name,level) values('小月月',2)insert into [user] (name,level) values('芙蓉姐姐',3)
+
+
+select
+	*,
+	头衔='菜鸟'
+from [user]
+
+
+--相当于是c#中的if-else
+--要求 then 后面的数据类型必须一致
+select
+	*,
+	头衔=case
+			when [level]=1 then '菜鸟'
+			when [level]=2 then '老鸟'
+			when [level]=3 then '大师'
+			else '骨灰级大师'
+		 end
+from [user]
+
+--相当于C#中的switch
+select
+	*,
+	头衔=case [level]
+			when 1 then '菜鸟'
+			when 2 then '老鸟'
+			when 3 then '大师'
+			else '骨灰级大师'
+		 end
+from [user]
+
+select * from TblScore
+
+select 
+	tscoreId,
+	tsid,
+	tenglish,
+	等级=case
+			when tenglish>=95 then '优'
+			when tenglish>=80 then '良'
+			when tenglish>=70 then '中'
+			else '差'			
+		 end
+from TblScore
+
+>=95  优
+>=80  良
+>=70  中
+小于70	差
+
+select 
+	*,
+	是否及格=case
+				when tEnglish>=60 and tMath>=60 then '及格'
+				else '不及格'
+			 end
+from TblScore
+
+--------------
+select * from TestA
+
+create table TestA(	A int,	B int,	C int)insert into TestA values(10,20,30)insert into TestA values(20,30,10)insert into TestA values(30,10,20)insert into TestA values(10,20,30)select * from TestA--表中有A B C三列,用SQL语句实现：--当A列大于B列时选择A列否则选择B列，当B列大于C列时选择B列否则选择C列。select	X=case		when A>B then A		else B	  end,	Y=case		when B>C then B		else C	  endfrom TestA--在订单表中，统计每个销售员的总销售金额，列出销售员名、总销售金额、称号（>6000金牌，>5500银牌,>4500铜牌，否则普通）select * from MyOrdersselect	销售员,	总金额=sum(销售价格*销售数量),	称号=case			when sum(销售价格*销售数量)>6000 then '金牌'			when sum(销售价格*销售数量)>5500 then '银牌'			when sum(销售价格*销售数量)>4500 then '铜牌'			else '普通'	     endfrom MyOrdersgroup by 销售员------------------------------select * from testcreate table test(	number varchar(10),	amount int)insert into test(number,amount) values('RK1',10)insert into test(number,amount) values('RK2',20)insert into test(number,amount) values('RK3',-30)insert into test(number,amount) values('RK4',-10)单号   收入   支出Rk1     10       0Rk2     20       0Rk3      0        30Rk4      0        10select	单号=number,	收入=case			when amount>=0 then amount			else 0	     end,	支出=case			when amount>=0 then 0			else abs(amount)	     endfrom test--------------------------------------------------------------------select *from Teamscoreselect	球队名称=teamName,	胜=case			when gameResult='胜' then 1			else 0	   end,	负=case			when gameResult='负' then 1			else 0	   endfrom TeamScore--------------select	球队名称=teamName,	胜=sum(case			when gameResult='胜' then 1			else 0	   end),	负=sum(case			when gameResult='负' then 1			else 0	   end)from TeamScoregroup by teamName---------------------------------------------------------select	球队名称=teamName,	胜=case			when gameResult='胜' then '胜'			else null	   end,	负=case			when gameResult='负' then '负'			else null	   endfrom TeamScoreselect	球队名称=teamName,	胜=count(case			when gameResult='胜' then '胜'			else null	   end),	负=count(case			when gameResult='负' then '负'			else null	   end)from TeamScoregroup by teamName-----------------------select * from NBAScoreselect	teamName,	第1赛季=max(case				when seasonName='第1赛季' then score				else null			end),	第2赛季=max(case				when seasonName='第2赛季' then score				else null			end),	第3赛季=max(case				when seasonName='第3赛季' then score				else null			end)from NBAScoregroup by teamName	select * from StudentScoreselect	studentId,	语文=max(case			when courseName='语文' then score			else null		 end),	数学=max(case			when courseName='数学' then score			else null		 end),	英语=max(case			when courseName='英语' then score			else null		 end)from StudentScoregroup by studentIdselect * from MyOrders--------------索引----------------1.索引的目的：提高查询效率--2.索引分两种：--2.1聚集索引（物理）,一个表中只能有一个聚集索引。--2.2非聚集索引（逻辑），一个表中可以有多个非聚集索引。--3.增加索引后，会增加额外的存储空间。同时降低了增加新纪录，修改，删除的效率。啊吧aaab一--------------------索引---------------------------select c3,c4 from TestIndex1002 where c4>800 and c4<1000 order by c4 asc  create clustered index IXc4 on TestIndex1002(c4)drop index TestIndex1002.IXc4--------------------------3.将where条件变为c3='backuplsnparamorhinttext'，再测试select c3,c4 from TestIndex1002 where c3='backuplsnparamorhinttext'，虽然有一个聚集索引但是这个查询的where条件并没有充分利用该索引的优点，索引性能提升并不大。select c3,c4 from TestIndex1002where c3 in('backuplsnparamorhinttext','AddresscellPhone') order by c3 desccreate nonclustered index IXc3 on TestIndex1002(c3)drop index TestIndex1002.IXc3CREATE CLUSTERED INDEX [_dta_index_TestIndex1002_c_5_821577965__K3] ON [dbo].[TestIndex1002] 
+(
+	[c3] ASC
+)WITH (SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF) ON [PRIMARY]
+
+
+
+CREATE NONCLUSTERED INDEX [_dta_index_TestIndex1002_5_821577965__K4_3] ON [dbo].[TestIndex1002] 
+(
+	[c4] ASC
+)
+INCLUDE ( [c3]) WITH (SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF) ON [PRIMARY]
+
+
+
+----------------------子查询-----------------------------
+--查询'高二二班'的所有学生select * from TblClassselect * from TblStudent where tSClassId=5select * from TblStudent where tSClassId=(select tClassId from TblClass where tClassName='高二二班')select * from TblStudent as ts whereexists(select * from TblClass as tcwhere ts.tSClassId=tc.tClassId and tc.tClassName='高二二班')
+
+exists('fdsfsdf')
+
+ SELECT * FROM (SELECT * FROM student where sAge<30) as t  select 	(select max(tenglish) from tblscore),	(select min(tenglish) from tblscore),	(select avg(tenglish) from tblscore)			SELECT 		1 AS f1,		2 as f2,		(SELECT tenglish FROM tblscore) as f3				select * from TblStudent						select * from TblStudent where tsclassid in (select tclassid from TblClass)select * from student where sClassId in (select cId from class where cName='高一一班' or cName='高二一班')Select * from student where exists(select * from class where (cName='高一一班' or cName='高二二班') and class.cid=student.sclassid )select studentId,english from score where studentId in (select sId from student where sName='刘备' or sName = '关羽' or sName='张飞')delete from student where sId in (select sId from student where sName='刘备' or sName = '关羽' or sName='张飞')----------------分页查询-------------------------------------------使用top实现分页-------------------------------------要分页查询，或者分页显示，首先要确定按照什么排序，然后才能确定哪些记录应该在第一页，哪些记录应该在第二页。select * from Customers--每页显示7条数--第1页select top 7 * from Customers order by CustomerID asc--请查询出前2页的数据select top (7*2) * from Customers order by CustomerID asc--第2页,思路：--2.1先查询出（2-1）页的数据的CustomerIDselect top 7 * from Customers where CustomerID not in(select top (7*(2-1)) CustomerID from Customers order by CustomerID asc)order by CustomerID asc--第5页--查询出前4也的数据的Idselect top 7 * from Customers where CustomerID not in(select top (7*(5-1)) CustomerID from Customers order by CustomerID asc)order by CustomerID ascselect top 7 * from Customers order by CustomerID asc--------------使用row_number()实现分页-----------------------------------------1.为数据排序，然后编号。select *,Rn=row_number() over(order by CustomerID asc) from Customers--2.根据用户要查看的每页记录条数，以及要查看第几页。确定应该查询第几条到第几条--每页显示7条，要查看第8页--从  (8-1)*7+1  ... 8*7select * from (select *,Rn=row_number() over(order by CustomerID asc) from Customers) as twhere t.Rn between (8-1)*7+1 and 8*7---作业：查询MyStudent表select * from MyStudentselect * from TblStudentselect * from Tblclass--案例1：查询所有学生的姓名、年龄及所在班级--TblStudent,TblClassselect	t1.tsname,	t1.tsage,	t2.tclassNamefrom TblStudent as t1inner join TblClass as t2 on t1.tsclassid=t2.tclassId--案例2：查询年龄超过20岁的学生的姓名、年龄及所在班级--TblStudent,TblClassselect	t1.tsname,	t1.tsage,	t2.tclassNamefrom TblStudent as t1inner join TblClass as t2 on t1.tsclassid=t2.tclassIdwhere t1.tsage>20--案例3：查询学生姓名、年龄、班级及成绩--TblStudent,TblClass,TblScoreselect	t1.tsname,	t1.tsage,	t2.tclassName,	t3.tEnglish,	t3.tMathfrom TblStudent as t1inner join TblClass as t2 on t1.tsclassid=t2.tclassIdinner join TblScore as t3 on t1.tsid=t3.tsidselect * from TblScore

@@ -87,6 +87,7 @@
     <Content Include="callee与过滤器结合制作表格升降排序实例.html" />
     <Content Include="controller控制器scope父子集作用域实例讲解一+.html" />
     <Content Include="controller控制器scope父子集作用域实例讲解二.html" />
+    <Content Include="日志管理项目用到的日期js\DateCommon.js" />
     <Content Include="directive的link属性详解\1.html" />
     <Content Include="directive的link属性详解\home.html" />
     <Content Include="filter变量调节器分析与货币变量调节器处理.html" />

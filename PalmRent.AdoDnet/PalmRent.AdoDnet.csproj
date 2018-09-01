@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ado.net基本增删改查" />
+    <Content Include="case,索引.子查询" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
